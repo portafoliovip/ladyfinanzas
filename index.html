@@ -3,1117 +3,1435 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Libreta Financiera — Jeffer &amp; Lady</title>
+<title>Libreta financiera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#10241c;
-    --ink-2:#1c3a2c;
-    --paper:#f0ede1;
-    --paper-2:#e6e1d0;
-    --line:#c9c2a8;
-    --brass:#a8813f;
-    --brass-light:#c9a961;
-    --green:#2f6b45;
-    --green-deep:#204d33;
-    --red:#a13a2f;
-    --red-bg:#f3e2dd;
-    --ok:#2f6b45;
-    --muted:#6b6656;
-    --white:#fbfaf5;
-    font-size:16px;
+    --paper:#F1E8D3;
+    --paper-2:#E7DBBE;
+    --ink:#26313D;
+    --ink-soft:#5A6675;
+    --wine:#8C3B3B;
+    --wine-soft:#B96A5A;
+    --green:#3E6B4F;
+    --green-soft:#6F9A79;
+    --gold:#A8792F;
+    --line:#C9BA92;
+    --card:#FBF6E9;
+    --shadow:rgba(38,49,61,0.14);
+    --danger-bg:#F3DCD4;
+    --ok-bg:#DEE9DE;
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--paper);
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px);
-    background-size: 100% 2.1em;
-    color:var(--ink);
-    font-family: 'Iowan Old Style','Palatino Linotype', Palatino, Georgia, serif;
-    line-height:1.5;
-    min-height:100vh;
-    padding-bottom:4rem;
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#20241F;
+      --paper-2:#2A2E27;
+      --ink:#EDE6D6;
+      --ink-soft:#B9B2A0;
+      --wine:#E08B7A;
+      --wine-soft:#C96754;
+      --green:#8FC49E;
+      --green-soft:#6FA07D;
+      --gold:#D8AE6B;
+      --line:#4A4B3F;
+      --card:#2B2E26;
+      --shadow:rgba(0,0,0,0.4);
+      --danger-bg:#3C2A28;
+      --ok-bg:#25332A;
+    }
   }
-  .brand-strip{
-    height:10px;
-    background: repeating-linear-gradient(90deg, var(--brass) 0 18px, var(--brass-light) 18px 36px);
-  }
-  header.hero{
-    max-width:920px;
-    margin:0 auto;
-    padding:2.2rem 1.5rem 1.4rem;
-    text-align:left;
-    position:relative;
-  }
-  .stamp-corner{
-    position:absolute;
-    top:1.8rem;
-    right:1.5rem;
-    width:74px;height:74px;
-    border:3px solid var(--brass);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transform:rotate(-8deg);
-    color:var(--brass);
-    font-family: 'Courier New', monospace;
-    font-size:0.6rem;
-    letter-spacing:0.05em;
-    text-align:center;
-    line-height:1.1;
-    opacity:0.85;
-  }
-  h1{
-    font-family: Georgia, 'Iowan Old Style', serif;
-    font-weight:700;
-    font-size:clamp(1.9rem, 4vw, 2.7rem);
-    margin:0 0 0.15em;
-    letter-spacing:-0.01em;
-    color:var(--ink-2);
-  }
-  .subtitle{
-    color:var(--muted);
-    font-size:1rem;
-    max-width:56ch;
-  }
-  .ledger-label{
-    display:inline-block;
-    font-family:'Courier New', monospace;
-    font-size:0.72rem;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--brass);
-    border-bottom:1px solid var(--brass);
-    padding-bottom:2px;
-    margin-bottom:0.6rem;
+  :root[data-theme="dark"]{
+    --paper:#20241F;
+    --paper-2:#2A2E27;
+    --ink:#EDE6D6;
+    --ink-soft:#B9B2A0;
+    --wine:#E08B7A;
+    --wine-soft:#C96754;
+    --green:#8FC49E;
+    --green-soft:#6FA07D;
+    --gold:#D8AE6B;
+    --line:#4A4B3F;
+    --card:#2B2E26;
+    --shadow:rgba(0,0,0,0.4);
+    --danger-bg:#3C2A28;
+    --ok-bg:#25332A;
   }
 
-  .save-indicator{
-    max-width:920px;
-    margin:0 auto;
-    padding:0 1.5rem;
-    display:flex;
-    align-items:center;
-    gap:0.5rem;
-    font-family:'Courier New', monospace;
-    font-size:0.78rem;
-    color:var(--muted);
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    padding-bottom:40px;
   }
-  .save-dot{
-    width:8px;height:8px;border-radius:50%;
-    background:var(--green);
-    transition: background 0.2s;
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:0 16px;
+  }
+
+  header.cover{
+    background:var(--ink);
+    color:var(--paper);
+    padding:28px 16px 22px;
+    border-bottom:6px solid var(--gold);
+    position:relative;
+  }
+  header.cover .wrap{ max-width:640px; }
+  header.cover h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.7rem;
+    margin:0 0 4px;
+    letter-spacing:0.01em;
+  }
+  header.cover p{
+    margin:0;
+    color:var(--paper-2);
+    opacity:0.85;
+    font-size:0.92rem;
   }
 
   nav.tabs{
-    max-width:920px;
-    margin:1.2rem auto 0;
-    padding:0 1.5rem;
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:var(--paper);
+    border-bottom:2px solid var(--line);
+    overflow-x:auto;
+    white-space:nowrap;
+    -webkit-overflow-scrolling:touch;
+  }
+  nav.tabs .wrap{
     display:flex;
-    gap:0.4rem;
-    flex-wrap:wrap;
-    border-bottom:2px solid var(--ink);
+    gap:2px;
+    padding:0 16px;
   }
   nav.tabs button{
-    font-family:'Courier New', monospace;
-    font-size:0.82rem;
-    letter-spacing:0.04em;
-    text-transform:uppercase;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.85rem;
+    font-weight:600;
+    color:var(--ink-soft);
     background:none;
-    border:2px solid transparent;
-    border-bottom:none;
-    padding:0.55rem 0.9rem;
+    border:none;
+    padding:14px 10px 12px;
     cursor:pointer;
-    color:var(--muted);
-    border-radius:6px 6px 0 0;
-    position:relative;
-    top:2px;
+    border-bottom:3px solid transparent;
+    flex:0 0 auto;
   }
   nav.tabs button.active{
     color:var(--ink);
-    background:var(--paper-2);
-    border-color:var(--ink);
-    font-weight:700;
+    border-bottom-color:var(--gold);
+  }
+  nav.tabs button:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:2px;
   }
 
-  main{
-    max-width:920px;
-    margin:0 auto;
-    padding:1.6rem 1.5rem 0;
-  }
-  .panel{ display:none; }
-  .panel.active{ display:block; }
+  main{ padding-top:18px; }
+  section{ display:none; }
+  section.active{ display:block; }
 
-  /* RESUMEN */
-  .summary-grid{
+  h2.section-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.15rem;
+    margin:4px 0 14px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:10px;
+  }
+  h2.section-title .hint{
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+  }
+
+  .grid-summary{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
-    gap:1rem;
-    margin-bottom:1.6rem;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:22px;
   }
   .card{
-    background:var(--white);
+    background:var(--card);
     border:1px solid var(--line);
-    border-radius:4px;
-    padding:1.1rem 1.2rem;
-    box-shadow:2px 2px 0 rgba(16,36,28,0.06);
+    border-radius:3px;
+    padding:14px 14px 12px;
+    box-shadow:0 1px 3px var(--shadow);
   }
   .card .label{
-    font-family:'Courier New', monospace;
-    font-size:0.7rem;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-bottom:0.35rem;
+    font-size:0.74rem;
+    color:var(--ink-soft);
+    margin-bottom:4px;
   }
   .card .value{
-    font-size:1.5rem;
-    font-weight:700;
-    color:var(--ink-2);
+    font-family:'Fraunces', serif;
     font-variant-numeric:tabular-nums;
+    font-weight:600;
+    font-size:1.3rem;
+    line-height:1.15;
   }
-  .card .value.small{ font-size:1.05rem; }
+  .card .value.wine{ color:var(--wine); }
+  .card .value.green{ color:var(--green); }
+  .card.wide{ grid-column:1 / -1; }
 
-  .progress-wrap{
-    background:var(--white);
-    border:1px solid var(--line);
-    border-radius:4px;
-    padding:1.3rem 1.4rem;
-    margin-bottom:1.6rem;
-  }
-  .progress-bar-outer{
-    height:22px;
-    background:var(--paper-2);
-    border:1px solid var(--ink);
+  .priority-box{
+    background:var(--card);
+    border:1px solid var(--gold);
+    border-left:4px solid var(--gold);
     border-radius:3px;
-    overflow:hidden;
-    margin-top:0.5rem;
+    padding:16px;
+    margin-bottom:22px;
   }
-  .progress-bar-inner{
+  .priority-box .eyebrow{
+    font-size:0.74rem;
+    color:var(--gold);
+    margin-bottom:6px;
+  }
+  .priority-box .name{
+    font-family:'Fraunces', serif;
+    font-size:1.15rem;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .priority-box .figures{
+    display:flex;
+    justify-content:space-between;
+    font-variant-numeric:tabular-nums;
+    font-size:0.9rem;
+    color:var(--ink-soft);
+    margin-bottom:8px;
+  }
+
+  .progress-track{
+    height:8px;
+    background:var(--paper-2);
+    border-radius:5px;
+    overflow:hidden;
+  }
+  .progress-fill{
     height:100%;
-    background: repeating-linear-gradient(45deg, var(--green) 0 10px, var(--green-deep) 10px 20px);
+    background:var(--green);
+    border-radius:5px;
     transition:width 0.4s ease;
   }
-  .progress-text{
-    font-family:'Courier New', monospace;
-    font-size:0.85rem;
-    margin-top:0.4rem;
-    color:var(--muted);
-  }
 
-  .alert-box{
-    background:var(--red-bg);
-    border:1px solid var(--red);
-    border-left:6px solid var(--red);
-    border-radius:4px;
-    padding:1rem 1.2rem;
-    margin-bottom:1.6rem;
-    color:#5e241c;
-    font-size:0.93rem;
+  .ledger{
+    border-top:1px solid var(--line);
   }
-  .alert-box strong{ color:var(--red); }
-
-  .priority-list{
-    background:var(--white);
-    border:1px solid var(--line);
-    border-radius:4px;
-    padding:1.2rem 1.4rem;
-    margin-bottom:1.6rem;
+  .row{
+    border-bottom:1px solid var(--line);
+    padding:12px 0;
   }
-  .priority-list ol{ margin:0.5rem 0 0; padding-left:1.3rem; }
-  .priority-list li{ margin-bottom:0.35rem; }
-  .priority-list .done{ text-decoration:line-through; color:var(--muted); }
-
-  /* QUINCENA CARDS */
-  .quincena{
-    background:var(--white);
-    border:1px solid var(--line);
-    border-radius:4px;
-    margin-bottom:1rem;
-    overflow:hidden;
-  }
-  .quincena.hay-alerta{ border-left:5px solid var(--red); }
-  .quincena.completa{ border-left:5px solid var(--green); }
-  .quincena-header{
+  .row-top{
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    gap:1rem;
-    padding:0.9rem 1.2rem;
-    cursor:pointer;
-    background:var(--paper-2);
-    user-select:none;
-  }
-  .quincena-header:hover{ background:#ddd7c1; }
-  .quincena-title{
-    font-weight:700;
-    color:var(--ink-2);
-    font-size:0.98rem;
-  }
-  .quincena-sub{
-    font-family:'Courier New', monospace;
-    font-size:0.75rem;
-    color:var(--muted);
-    margin-top:0.15rem;
-  }
-  .quincena-meta-right{
-    display:flex;
-    align-items:center;
-    gap:0.8rem;
-    flex-shrink:0;
-  }
-  .mini-progress{
-    width:90px;height:8px;
-    background:var(--line);
-    border-radius:4px;
-    overflow:hidden;
-  }
-  .mini-progress-inner{ height:100%; background:var(--green); }
-  .chevron{
-    transition:transform 0.2s;
-    color:var(--muted);
-  }
-  .quincena.open .chevron{ transform:rotate(90deg); }
-  .quincena-body{
-    display:none;
-    padding:0.4rem 1.2rem 1.1rem;
-  }
-  .quincena.open .quincena-body{ display:block; }
-
-  .item-row{
-    display:flex;
     align-items:flex-start;
-    gap:0.7rem;
-    padding:0.55rem 0;
-    border-bottom:1px dashed var(--line);
+    gap:8px;
   }
-  .item-row:last-child{ border-bottom:none; }
-  .item-row.faltante{
-    background:var(--red-bg);
-    border-radius:3px;
-    padding:0.55rem 0.6rem;
-    margin:0.3rem 0;
-    border-bottom:none;
+  .row-name-wrap{ flex:1; min-width:0; }
+  .row-name{
+    font-weight:600;
+    font-size:0.96rem;
   }
-  .item-row input[type=checkbox]{
-    width:19px;height:19px;
+  .row-sub{
+    font-size:0.78rem;
+    color:var(--ink-soft);
     margin-top:2px;
-    accent-color:var(--green);
-    flex-shrink:0;
-    cursor:pointer;
   }
-  .item-concepto{ flex:1; font-size:0.93rem; }
-  .item-concepto.checked{ text-decoration:line-through; color:var(--muted); }
-  .item-cat{
-    display:inline-block;
-    font-family:'Courier New', monospace;
-    font-size:0.65rem;
-    text-transform:uppercase;
-    letter-spacing:0.05em;
-    color:var(--muted);
-    margin-left:0.4rem;
-  }
-  .item-monto{
-    font-family:'Courier New', monospace;
-    font-size:0.9rem;
+  .row-amount{
     font-variant-numeric:tabular-nums;
+    font-weight:600;
+    font-size:0.98rem;
     white-space:nowrap;
-    font-weight:700;
-    color:var(--ink-2);
   }
-  .item-monto.neg{ color:var(--red); }
+  .row-amount.wine{ color:var(--wine); }
+  .row-amount.green{ color:var(--green); }
 
-  .monto-marcado{
-    font-family:'Courier New', monospace;
-    font-size:0.82rem;
-    font-weight:700;
-    color:var(--brass);
-  }
-  .saldo-line{
+  .row-progress{ margin-top:8px; }
+  .row-progress .figures{
     display:flex;
     justify-content:space-between;
-    font-family:'Courier New', monospace;
-    font-size:0.85rem;
-    margin-top:0.5rem;
-    padding-top:0.5rem;
-    border-top:2px solid var(--ink);
-    color:var(--ink-2);
-    font-weight:700;
+    font-size:0.76rem;
+    color:var(--ink-soft);
+    margin-bottom:4px;
+    font-variant-numeric:tabular-nums;
   }
-  .saldo-line.ajustado{ color:var(--red); }
-  .saldo-sub{
-    font-family:'Courier New', monospace;
-    font-size:0.72rem;
-    color:var(--muted);
-    text-align:right;
-    margin-top:0.1rem;
+  .row-projection{
+    font-size:0.76rem;
+    color:var(--gold);
+    margin-top:6px;
   }
 
-  /* GASTOS IMPREVISTOS */
-  .extra-section{
-    margin-top:0.6rem;
-    padding-top:0.6rem;
-    border-top:1px dashed var(--line);
+  .row-actions{
+    display:flex;
+    gap:14px;
+    margin-top:8px;
+    flex-wrap:wrap;
   }
-  .extra-label{
-    font-family:'Courier New', monospace;
-    font-size:0.68rem;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--brass);
-    margin-bottom:0.4rem;
-  }
-  .item-row.extra .item-cat{ color:var(--red); }
-  .extra-del{
+  .row-actions button{
     background:none;
     border:none;
-    color:var(--red);
-    font-size:1rem;
-    line-height:1;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.76rem;
+    font-weight:600;
+    color:var(--ink-soft);
+    padding:2px 0;
     cursor:pointer;
-    flex-shrink:0;
-    padding:0 0.2rem;
+    border-bottom:1px solid var(--line);
   }
-  .extra-form{
+  .row-actions button.danger{ color:var(--wine); }
+  .row-actions button.ok{ color:var(--green); }
+
+  .status-pill{
+    display:inline-block;
+    font-size:0.7rem;
+    font-weight:600;
+    padding:2px 8px;
+    border-radius:20px;
+    margin-top:6px;
+  }
+  .status-pill.pending{ background:var(--danger-bg); color:var(--wine); }
+  .status-pill.paid{ background:var(--ok-bg); color:var(--green); }
+
+  .add-form{
+    background:var(--card);
+    border:1px dashed var(--line);
+    border-radius:3px;
+    padding:14px;
+    margin-top:16px;
+  }
+  .add-form .form-title{
+    font-size:0.8rem;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .field-row{
     display:flex;
-    gap:0.5rem;
+    gap:8px;
+    margin-bottom:8px;
     flex-wrap:wrap;
-    margin-top:0.5rem;
-    align-items:center;
   }
-  .extra-form input[type=text]{
-    flex:2;
-    min-width:140px;
-    font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
-    font-size:0.85rem;
-    padding:0.4rem 0.5rem;
-    border:1px solid var(--line);
-    border-radius:3px;
-    background:var(--white);
+  .field{
+    flex:1 1 120px;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
   }
-  .extra-form input[type=number]{
-    flex:1;
-    min-width:100px;
-    font-family:'Courier New', monospace;
-    font-size:0.85rem;
-    padding:0.4rem 0.5rem;
-    border:1px solid var(--line);
-    border-radius:3px;
-    background:var(--white);
-  }
-  .extra-form button{
-    font-family:'Courier New', monospace;
+  .field label{
     font-size:0.72rem;
-    text-transform:uppercase;
-    letter-spacing:0.05em;
-    background:var(--brass);
-    border:none;
+    color:var(--ink-soft);
+  }
+  input, select{
+    font-family:'Work Sans', sans-serif;
+    font-size:0.9rem;
+    padding:8px 9px;
+    border:1px solid var(--line);
     border-radius:3px;
-    padding:0.5rem 0.8rem;
-    color:var(--white);
+    background:var(--paper);
+    color:var(--ink);
+    width:100%;
+  }
+  input[type="number"]{ font-variant-numeric:tabular-nums; }
+  input[type="checkbox"]{ width:auto; }
+
+  .btn{
+    font-family:'Work Sans', sans-serif;
+    font-weight:600;
+    font-size:0.85rem;
+    padding:9px 16px;
+    border-radius:3px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
     cursor:pointer;
   }
-  .extra-form button:hover{ background:var(--brass-light); }
-  .extra-total-line{
+  .btn.secondary{
+    background:none;
+    color:var(--ink);
+    border:1px solid var(--line);
+  }
+  .btn:active{ transform:translateY(1px); }
+
+  .empty{
+    color:var(--ink-soft);
+    font-size:0.85rem;
+    font-style:italic;
+    padding:16px 0;
+  }
+
+  .month-bar{
     display:flex;
     justify-content:space-between;
-    font-family:'Courier New', monospace;
-    font-size:0.8rem;
-    color:var(--red);
-    margin-top:0.4rem;
+    align-items:center;
+    margin-bottom:14px;
   }
-
-  /* AHORRO ACUMULADO (metas) */
-  .ahorro-acumulado-card{
-    background:var(--white);
-    border:1.5px solid var(--brass);
-    border-radius:4px;
-    padding:1.1rem 1.2rem;
-    margin-bottom:1.2rem;
-    box-shadow:2px 2px 0 rgba(16,36,28,0.06);
-  }
-  .ahorro-acumulado-card .label{
-    font-family:'Courier New', monospace;
-    font-size:0.7rem;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    color:var(--brass);
-    margin-bottom:0.3rem;
-  }
-  .ahorro-acumulado-card .value{
-    font-size:1.6rem;
-    font-weight:700;
-    color:var(--ink-2);
+  .month-bar .total{
+    font-family:'Fraunces', serif;
+    font-weight:600;
     font-variant-numeric:tabular-nums;
-  }
-  .ahorro-acumulado-card .sub{
-    font-family:'Courier New', monospace;
-    font-size:0.78rem;
-    color:var(--muted);
-    margin-top:0.3rem;
+    font-size:1.15rem;
   }
 
-  /* METAS */
-  .meta-card{
-    background:var(--white);
+  .savings-input-box{
+    background:var(--card);
     border:1px solid var(--line);
-    border-radius:4px;
-    padding:1rem 1.2rem;
-    margin-bottom:0.8rem;
+    border-radius:3px;
+    padding:12px 14px;
+    margin-bottom:18px;
     display:flex;
     align-items:center;
-    gap:1rem;
-  }
-  .meta-card.cumplida{ opacity:0.6; }
-  .meta-num{
-    font-family:'Courier New', monospace;
-    font-size:1.3rem;
-    font-weight:700;
-    color:var(--brass);
-    width:2ch;
-  }
-  .meta-info{ flex:1; }
-  .meta-nombre{ font-weight:700; color:var(--ink-2); }
-  .meta-detail{
-    font-family:'Courier New', monospace;
-    font-size:0.78rem;
-    color:var(--muted);
-  }
-  .meta-check{
-    width:22px;height:22px;
-    accent-color:var(--green);
-    cursor:pointer;
-  }
-
-  /* CONTROLES */
-  .toolbar{
-    display:flex;
-    gap:0.7rem;
+    gap:10px;
     flex-wrap:wrap;
-    margin-bottom:1.4rem;
   }
-  .btn{
-    font-family:'Courier New', monospace;
-    font-size:0.78rem;
-    text-transform:uppercase;
-    letter-spacing:0.05em;
-    background:var(--white);
-    border:1.5px solid var(--ink);
-    border-radius:3px;
-    padding:0.5rem 0.9rem;
-    cursor:pointer;
-    color:var(--ink);
+  .savings-input-box label{
+    font-size:0.8rem;
+    color:var(--ink-soft);
+    flex:1 1 auto;
   }
-  .btn:hover{ background:var(--ink); color:var(--white); }
-  .btn.danger{ border-color:var(--red); color:var(--red); }
-  .btn.danger:hover{ background:var(--red); color:var(--white); }
+  .savings-input-box input{
+    width:140px;
+    flex:0 0 auto;
+  }
 
-  .search-input{
-    font-family:'Courier New', monospace;
+  .period-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:3px;
+    margin-bottom:12px;
+    overflow:hidden;
+  }
+  .period-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 14px;
+    background:var(--paper-2);
+    border-bottom:1px solid var(--line);
+  }
+  .period-head .p-label{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:0.95rem;
+  }
+  .period-head .p-total{
+    font-variant-numeric:tabular-nums;
+    font-weight:600;
+    color:var(--wine);
+    font-size:0.95rem;
+  }
+  .period-items{ padding:4px 14px; }
+  .period-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    padding:7px 0;
+    border-bottom:1px solid var(--line);
+    font-size:0.84rem;
+  }
+  .period-item.checkable{ cursor:pointer; }
+  .period-item:last-child{ border-bottom:none; }
+  .period-item .p-item-left{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    min-width:0;
+  }
+  .period-item input[type="checkbox"]{
+    flex:0 0 auto;
+    width:16px;
+    height:16px;
+    accent-color:var(--green);
+  }
+  .period-item .p-item-label{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .period-item .p-item-label.paid-strike{
+    text-decoration:line-through;
+    color:var(--ink-soft);
+  }
+  .period-item .p-item-label.goal-label{
+    color:var(--gold);
+    font-weight:600;
+  }
+  .period-item .p-item-amount{
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+    color:var(--ink-soft);
+  }
+  .period-empty{
+    padding:10px 14px;
+    font-size:0.8rem;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+
+  footer.note{
+    max-width:640px;
+    margin:30px auto 0;
+    padding:0 16px;
+    font-size:0.75rem;
+    color:var(--ink-soft);
+  }
+
+  ::-webkit-scrollbar{ height:0; }
+
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom:22px;
+    transform:translateX(-50%) translateY(16px);
+    background:var(--ink);
+    color:var(--paper);
+    padding:10px 18px;
+    border-radius:6px;
+    font-family:'Work Sans', sans-serif;
     font-size:0.85rem;
-    padding:0.5rem 0.7rem;
-    border:1.5px solid var(--ink);
-    border-radius:3px;
-    background:var(--white);
-    flex:1;
-    min-width:180px;
-  }
-
-  footer{
-    max-width:920px;
-    margin:2rem auto 0;
-    padding:1rem 1.5rem;
-    font-size:0.78rem;
-    color:var(--muted);
+    font-weight:600;
+    box-shadow:0 4px 14px var(--shadow);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.25s ease, transform 0.25s ease;
+    z-index:50;
+    max-width:88%;
     text-align:center;
-    font-family:'Courier New', monospace;
   }
-
-  @media (max-width:560px){
-    .stamp-corner{ display:none; }
-    .quincena-header{ flex-wrap:wrap; }
-    .quincena-meta-right{ width:100%; justify-content:space-between; }
+  .toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
   }
 </style>
 </head>
 <body>
 
-<div class="brand-strip"></div>
-
-<header class="hero">
-  <div class="stamp-corner">LIBRETA<br>DE<br>AHORRO</div>
-  <span class="ledger-label">Plan financiero familiar</span>
-  <h1>Jeffer &amp; Lady</h1>
-  <p class="subtitle">Control quincenal de ingresos, gastos, deudas y ahorro. Marca cada casilla al separar o pagar cada valor — todo queda guardado en este dispositivo.</p>
+<header class="cover">
+  <div class="wrap">
+    <h1>Libreta financiera</h1>
+    <p>Metas de ahorro, deudas y gastos de Lady y Jeffer</p>
+  </div>
 </header>
 
-<div class="save-indicator">
-  <span class="save-dot" id="saveDot"></span>
-  <span id="saveText">Guardado en este dispositivo</span>
-</div>
-
 <nav class="tabs">
-  <button class="tab-btn active" data-panel="resumen">Resumen</button>
-  <button class="tab-btn" data-panel="checklist">Checklist quincenal</button>
-  <button class="tab-btn" data-panel="metas">Metas de ahorro</button>
+  <div class="wrap">
+    <button data-tab="resumen" class="active">Resumen</button>
+    <button data-tab="metas">Metas</button>
+    <button data-tab="fijas">Deudas fijas</button>
+    <button data-tab="variables">Deudas variables</button>
+    <button data-tab="quincenas">Por quincena</button>
+    <button data-tab="gastos">Gastos</button>
+  </div>
 </nav>
 
-<main>
+<main class="wrap">
 
-  <!-- RESUMEN -->
-  <section class="panel active" id="panel-resumen">
-    <div class="summary-grid">
-      <div class="card">
-        <div class="label">Ingreso quincenal</div>
-        <div class="value" id="sumIngreso">$2.300.000</div>
+  <section id="resumen" class="active">
+    <h2 class="section-title">Resumen</h2>
+    <div id="priorityBox"></div>
+    <div class="grid-summary" id="summaryCards"></div>
+  </section>
+
+  <section id="metas">
+    <h2 class="section-title">Metas de ahorro <span class="hint">en orden de prioridad</span></h2>
+    <div class="add-form" style="margin-top:0; margin-bottom:18px;">
+      <div class="form-title">Ingresos y reserva de gasolina (quincenal)</div>
+      <div class="field-row">
+        <div class="field"><label>Ingreso bruto Jefferson</label><input id="incJefferson" type="number" onchange="updateIncome()"></div>
+        <div class="field"><label>Salario base Lady (SMLV)</label><input id="incLady" type="number" onchange="updateIncome()"></div>
+        <div class="field"><label>Auxilio de transporte Lady</label><input id="incLadyTransporte" type="number" onchange="updateIncome()"></div>
       </div>
-      <div class="card">
-        <div class="label">Ahorro obligatorio (15%)</div>
-        <div class="value" id="sumAhorroObl">$345.000</div>
+      <div class="field-row">
+        <div class="field"><label>% descuento seguridad social</label><input id="incDescuento" type="number" onchange="updateIncome()"></div>
+        <div class="field"><label>Gasolina Jefferson (c/quincena)</label><input id="gasJefferson" type="number" onchange="updateIncome()"></div>
+        <div class="field"><label>Gasolina Lady (c/quincena)</label><input id="gasLady" type="number" onchange="updateIncome()"></div>
       </div>
-      <div class="card">
-        <div class="label">Total metas y deudas</div>
-        <div class="value" id="sumMetas">$57.400.000</div>
+      <div id="incomeSummary" style="font-size:0.8rem; color:var(--ink-soft); margin-top:6px;"></div>
+    </div>
+    <div class="ledger" id="goalsList"></div>
+    <div class="add-form">
+      <div class="form-title">Agregar meta</div>
+      <div class="field-row">
+        <div class="field"><label>Nombre</label><input id="goalName" placeholder="Ej: Licencia Lady"></div>
+        <div class="field"><label>Meta ($)</label><input id="goalTarget" type="number" placeholder="380000"></div>
       </div>
-      <div class="card">
-        <div class="label">Fecha estimada última meta</div>
-        <div class="value small">30-sep-2028</div>
-      </div>
-    </div>
-
-    <div class="progress-wrap">
-      <div class="label" style="font-family:'Courier New',monospace;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);">Progreso general del plan</div>
-      <div class="progress-bar-outer"><div class="progress-bar-inner" id="globalProgressBar" style="width:0%"></div></div>
-      <div class="progress-text" id="globalProgressText">0 de 0 pagos marcados</div>
-    </div>
-
-    <div class="alert-box">
-      <strong>Alerta — quincenas con faltante:</strong> el 30-jul, 30-ago y 30-sep de 2026 los gastos fijos más las cuotas de deuda superan el ingreso disponible tras el ahorro obligatorio. El faltante se cubre con el ahorro ya acumulado. Revisa esas quincenas en la pestaña Checklist (marcadas en rojo).
-    </div>
-
-    <div class="priority-list">
-      <div class="ledger-label">Orden de prioridad de ahorro</div>
-      <ol id="prioridadList"></ol>
-    </div>
-
-    <div class="priority-list">
-      <div class="ledger-label">Cómo usar esta libreta</div>
-      <p style="font-size:0.9rem;">Cada quincena aparece como una tarjeta en <strong>Checklist quincenal</strong>. Ábrela, marca cada casilla a medida que separas o pagas ese valor, y el saldo acumulado se calcula solo. Todo lo que marcas se guarda automáticamente en este navegador — si cierras la página o apagas el teléfono, lo encontrarás igual la próxima vez que entres aquí. Usa el botón <em>Exportar copia</em> de vez en cuando para tener un respaldo aparte.</p>
-    </div>
-
-    <div class="toolbar">
-      <button class="btn" id="btnExport">Exportar copia de seguridad</button>
-      <button class="btn danger" id="btnReset">Restablecer todo</button>
+      <button class="btn" onclick="addGoal()">Agregar meta</button>
     </div>
   </section>
 
-  <!-- CHECKLIST -->
-  <section class="panel" id="panel-checklist">
-    <div class="toolbar">
-      <input class="search-input" id="searchInput" type="text" placeholder="Buscar concepto (ej. arriendo, iPhone, Don Victor)...">
-      <button class="btn" id="btnExpandAll">Abrir todas</button>
-      <button class="btn" id="btnCollapseAll">Cerrar todas</button>
-      <button class="btn" id="btnJumpNext">Ir a la próxima pendiente</button>
+  <section id="fijas">
+    <h2 class="section-title">Deudas fijas <span class="hint">mensuales y quincenales</span></h2>
+    <div class="ledger" id="fixedList"></div>
+    <div class="field-row" style="margin-top:14px;">
+      <button class="btn secondary" id="resetFixedBtn" onclick="resetFixedMonth()">Reiniciar periodo (marcar todo como pendiente)</button>
     </div>
-    <div id="quincenasContainer"></div>
+    <div class="add-form">
+      <div class="form-title">Agregar deuda fija</div>
+      <div class="field-row">
+        <div class="field"><label>Nombre</label><input id="fixedName" placeholder="Ej: Arriendo"></div>
+        <div class="field"><label>Valor ($)</label><input id="fixedAmount" type="number" placeholder="800000"></div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Frecuencia</label>
+          <select id="fixedFreq" onchange="toggleFixedFreqFields()">
+            <option value="mensual" selected>Mensual</option>
+            <option value="quincenal">Quincenal</option>
+          </select>
+        </div>
+        <div class="field" id="fixedDayField"><label>Día de pago</label><input id="fixedDay" type="number" min="1" max="31" placeholder="30"></div>
+        <div class="field" id="fixedStartField" style="display:none;"><label>Empieza el</label><input id="fixedStart" type="date"></div>
+      </div>
+      <button class="btn" onclick="addFixed()">Agregar deuda fija</button>
+    </div>
   </section>
 
-  <!-- METAS -->
-  <section class="panel" id="panel-metas">
-    <p style="color:var(--muted);font-size:0.9rem;">Una vez cubiertos los gastos fijos y las cuotas de deuda, todo el ahorro (obligatorio + sobrante) se destina a estas metas, en este orden. Márcalas cuando se cumplan.</p>
-    <div class="ahorro-acumulado-card">
-      <div class="label">Ahorro acumulado disponible</div>
-      <div class="value" id="ahorroAcumuladoValor">$0</div>
-      <div class="sub" id="ahorroAcumuladoSub">Suma de lo marcado como ahorrado en el checklist, menos el valor de las metas ya pagadas.</div>
+  <section id="variables">
+    <h2 class="section-title">Deudas variables <span class="hint">cuotas y pagos únicos</span></h2>
+    <div class="ledger" id="variableList"></div>
+    <div class="add-form">
+      <div class="form-title">Agregar deuda variable</div>
+      <div class="field-row">
+        <div class="field"><label>Nombre</label><input id="varName" placeholder="Ej: Dr. Peso"></div>
+        <div class="field"><label>Valor cuota ($)</label><input id="varAmount" type="number" placeholder="290000"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Cuota actual</label><input id="varCurrent" type="number" min="1" value="1"></div>
+        <div class="field"><label>Total de cuotas</label><input id="varTotal" type="number" min="1" value="1"></div>
+        <div class="field">
+          <label>Frecuencia</label>
+          <select id="varFreq">
+            <option value="única">Única</option>
+            <option value="quincenal">Quincenal</option>
+            <option value="mensual" selected>Mensual</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Próximo pago</label><input id="varDate" type="date"></div>
+      </div>
+      <button class="btn" onclick="addVariable()">Agregar deuda variable</button>
     </div>
-    <div id="metasContainer"></div>
+  </section>
+
+  <section id="quincenas">
+    <h2 class="section-title">Por quincena <span class="hint">hasta completar las metas</span></h2>
+    <div id="periodsNote" style="font-size:0.8rem; color:var(--ink-soft); margin-bottom:14px;"></div>
+    <div id="periodsList"></div>
+  </section>
+
+  <section id="gastos">
+    <h2 class="section-title">Gastos</h2>
+    <div class="month-bar">
+      <span style="font-size:0.82rem; color:var(--ink-soft);">Total registrado</span>
+      <span class="total" id="expenseTotal">$0</span>
+    </div>
+    <div class="ledger" id="expenseList"></div>
+    <div class="add-form">
+      <div class="form-title">Agregar gasto</div>
+      <div class="field-row">
+        <div class="field"><label>Fecha</label><input id="expDate" type="date"></div>
+        <div class="field"><label>Categoría</label><input id="expCategory" placeholder="Comida, transporte..."></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Descripción</label><input id="expDesc" placeholder="Opcional"></div>
+        <div class="field"><label>Valor ($)</label><input id="expAmount" type="number" placeholder="25000"></div>
+      </div>
+      <button class="btn" onclick="addExpense()">Agregar gasto</button>
+    </div>
   </section>
 
 </main>
 
-<footer>
-  Los datos se guardan solo en este navegador (localStorage), no se envían a ningún servidor.
-</footer>
+<footer class="note">Los datos se guardan solo en este navegador, en este dispositivo. La vista "Por quincena" y las proyecciones de metas son estimaciones basadas en lo que registras aquí.</footer>
+
+<div id="toast" class="toast"></div>
 
 <script>
-const QUINCENAS = [{"titulo": "QUINCENA 1  -  30-Jul-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-07-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q1_i1"}, {"fecha": "2026-07-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q1_i2"}, {"fecha": "2026-07-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q1_i3"}, {"fecha": "2026-07-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q1_i4"}, {"fecha": "2026-07-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q1_i5"}, {"fecha": "2026-07-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q1_i6"}, {"fecha": "2026-07-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q1_i7"}, {"fecha": "2026-07-30", "concepto": "Jhon - celular -> cuota 1 de 4", "categoria": "Deuda", "monto": 133000, "id": "q1_i8"}, {"fecha": "2026-07-30", "concepto": "Jhon - prestamo -> cuota 1 de 4", "categoria": "Deuda", "monto": 180000, "id": "q1_i9"}, {"fecha": "2026-07-30", "concepto": "Don Victor -> cuota 1 de 5", "categoria": "Deuda", "monto": 280000, "id": "q1_i10"}, {"fecha": "2026-07-30", "concepto": "iPhone -> cuota 1 de 10", "categoria": "Deuda", "monto": 230000, "id": "q1_i11"}, {"fecha": "2026-07-30", "concepto": "ALERTA: el ingreso no alcanza. Cubrir el faltante con ahorro ya acumulado", "categoria": "Faltante", "monto": -53000, "id": "q1_i12"}], "saldo": -53000}, {"titulo": "QUINCENA 2  -  15-Aug-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-08-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q2_i1"}, {"fecha": "2026-08-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q2_i2"}, {"fecha": "2026-08-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q2_i3"}, {"fecha": "2026-08-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q2_i4"}, {"fecha": "2026-08-15", "concepto": "Jhon - celular -> cuota 2 de 4", "categoria": "Deuda", "monto": 133000, "id": "q2_i5"}, {"fecha": "2026-08-15", "concepto": "Jhon - prestamo -> cuota 2 de 4", "categoria": "Deuda", "monto": 180000, "id": "q2_i6"}, {"fecha": "2026-08-15", "concepto": "Don Victor -> cuota 2 de 5", "categoria": "Deuda", "monto": 280000, "id": "q2_i7"}, {"fecha": "2026-08-15", "concepto": "iPhone -> cuota 2 de 10", "categoria": "Deuda", "monto": 230000, "id": "q2_i8"}, {"fecha": "2026-08-15", "concepto": "Monet -> cuota 1 de 1", "categoria": "Deuda", "monto": 150000, "id": "q2_i9"}, {"fecha": "2026-08-15", "concepto": "Ahorro adicional -> destinar a meta: Licencia Lady", "categoria": "Ahorro meta", "monto": 307000, "id": "q2_i10"}], "saldo": 599000}, {"titulo": "QUINCENA 3  -  30-Aug-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-08-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q3_i1"}, {"fecha": "2026-08-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q3_i2"}, {"fecha": "2026-08-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q3_i3"}, {"fecha": "2026-08-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q3_i4"}, {"fecha": "2026-08-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q3_i5"}, {"fecha": "2026-08-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q3_i6"}, {"fecha": "2026-08-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q3_i7"}, {"fecha": "2026-08-30", "concepto": "Jhon - celular -> cuota 3 de 4", "categoria": "Deuda", "monto": 133000, "id": "q3_i8"}, {"fecha": "2026-08-30", "concepto": "Jhon - prestamo -> cuota 3 de 4", "categoria": "Deuda", "monto": 180000, "id": "q3_i9"}, {"fecha": "2026-08-30", "concepto": "Don Victor -> cuota 3 de 5", "categoria": "Deuda", "monto": 280000, "id": "q3_i10"}, {"fecha": "2026-08-30", "concepto": "iPhone -> cuota 3 de 10", "categoria": "Deuda", "monto": 230000, "id": "q3_i11"}, {"fecha": "2026-08-30", "concepto": "ALERTA: el ingreso no alcanza. Cubrir el faltante con ahorro ya acumulado", "categoria": "Faltante", "monto": -53000, "id": "q3_i12"}], "saldo": 546000}, {"titulo": "QUINCENA 4  -  15-Sep-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-09-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q4_i1"}, {"fecha": "2026-09-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q4_i2"}, {"fecha": "2026-09-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q4_i3"}, {"fecha": "2026-09-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q4_i4"}, {"fecha": "2026-09-15", "concepto": "Jhon - celular -> cuota 4 de 4", "categoria": "Deuda", "monto": 133000, "id": "q4_i5"}, {"fecha": "2026-09-15", "concepto": "Jhon - prestamo -> cuota 4 de 4", "categoria": "Deuda", "monto": 180000, "id": "q4_i6"}, {"fecha": "2026-09-15", "concepto": "Don Victor -> cuota 4 de 5", "categoria": "Deuda", "monto": 280000, "id": "q4_i7"}, {"fecha": "2026-09-15", "concepto": "iPhone -> cuota 4 de 10", "categoria": "Deuda", "monto": 230000, "id": "q4_i8"}, {"fecha": "2026-09-15", "concepto": "Ahorro adicional -> destinar a meta: Licencia Lady", "categoria": "Ahorro meta", "monto": 457000, "id": "q4_i9"}], "saldo": 1348000}, {"titulo": "QUINCENA 5  -  30-Sep-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-09-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q5_i1"}, {"fecha": "2026-09-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q5_i2"}, {"fecha": "2026-09-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q5_i3"}, {"fecha": "2026-09-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q5_i4"}, {"fecha": "2026-09-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q5_i5"}, {"fecha": "2026-09-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q5_i6"}, {"fecha": "2026-09-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q5_i7"}, {"fecha": "2026-09-30", "concepto": "Don Victor -> cuota 5 de 5", "categoria": "Deuda", "monto": 280000, "id": "q5_i8"}, {"fecha": "2026-09-30", "concepto": "iPhone -> cuota 5 de 10", "categoria": "Deuda", "monto": 230000, "id": "q5_i9"}, {"fecha": "2026-09-30", "concepto": "ALERTA: el ingreso no alcanza. Cubrir el faltante con ahorro ya acumulado", "categoria": "Faltante", "monto": 260000, "id": "q5_i10"}], "saldo": 1608000}, {"titulo": "QUINCENA 6  -  15-Oct-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-10-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q6_i1"}, {"fecha": "2026-10-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q6_i2"}, {"fecha": "2026-10-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q6_i3"}, {"fecha": "2026-10-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q6_i4"}, {"fecha": "2026-10-15", "concepto": "iPhone -> cuota 6 de 10", "categoria": "Deuda", "monto": 230000, "id": "q6_i5"}, {"fecha": "2026-10-15", "concepto": "Ahorro adicional -> destinar a meta: Licencia Jeffer", "categoria": "Ahorro meta", "monto": 1050000, "id": "q6_i6"}], "saldo": 3003000}, {"titulo": "QUINCENA 7  -  30-Oct-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-10-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q7_i1"}, {"fecha": "2026-10-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q7_i2"}, {"fecha": "2026-10-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q7_i3"}, {"fecha": "2026-10-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q7_i4"}, {"fecha": "2026-10-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q7_i5"}, {"fecha": "2026-10-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q7_i6"}, {"fecha": "2026-10-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q7_i7"}, {"fecha": "2026-10-30", "concepto": "iPhone -> cuota 7 de 10", "categoria": "Deuda", "monto": 230000, "id": "q7_i8"}, {"fecha": "2026-10-30", "concepto": "Ahorro adicional -> destinar a meta: Datacredito Lady", "categoria": "Ahorro meta", "monto": 195000, "id": "q7_i9"}], "saldo": 3543000}, {"titulo": "QUINCENA 8  -  15-Nov-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-11-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q8_i1"}, {"fecha": "2026-11-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q8_i2"}, {"fecha": "2026-11-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q8_i3"}, {"fecha": "2026-11-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q8_i4"}, {"fecha": "2026-11-15", "concepto": "iPhone -> cuota 8 de 10", "categoria": "Deuda", "monto": 230000, "id": "q8_i5"}, {"fecha": "2026-11-15", "concepto": "Ahorro adicional -> destinar a meta: Datacredito Lady", "categoria": "Ahorro meta", "monto": 1050000, "id": "q8_i6"}], "saldo": 4938000}, {"titulo": "QUINCENA 9  -  30-Nov-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-11-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q9_i1"}, {"fecha": "2026-11-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q9_i2"}, {"fecha": "2026-11-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q9_i3"}, {"fecha": "2026-11-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q9_i4"}, {"fecha": "2026-11-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q9_i5"}, {"fecha": "2026-11-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q9_i6"}, {"fecha": "2026-11-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q9_i7"}, {"fecha": "2026-11-30", "concepto": "iPhone -> cuota 9 de 10", "categoria": "Deuda", "monto": 230000, "id": "q9_i8"}, {"fecha": "2026-11-30", "concepto": "Ahorro adicional -> destinar a meta: Datacredito Lady", "categoria": "Ahorro meta", "monto": 195000, "id": "q9_i9"}], "saldo": 5478000}, {"titulo": "QUINCENA 10  -  15-Dec-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-12-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q10_i1"}, {"fecha": "2026-12-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q10_i2"}, {"fecha": "2026-12-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q10_i3"}, {"fecha": "2026-12-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q10_i4"}, {"fecha": "2026-12-15", "concepto": "iPhone -> cuota 10 de 10", "categoria": "Deuda", "monto": 230000, "id": "q10_i5"}, {"fecha": "2026-12-15", "concepto": "Ahorro adicional -> destinar a meta: Datacredito Lady", "categoria": "Ahorro meta", "monto": 1050000, "id": "q10_i6"}], "saldo": 6873000}, {"titulo": "QUINCENA 11  -  30-Dec-2026  -  Ingreso total: $2,300,000", "items": [{"fecha": "2026-12-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q11_i1"}, {"fecha": "2026-12-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q11_i2"}, {"fecha": "2026-12-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q11_i3"}, {"fecha": "2026-12-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q11_i4"}, {"fecha": "2026-12-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q11_i5"}, {"fecha": "2026-12-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q11_i6"}, {"fecha": "2026-12-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q11_i7"}, {"fecha": "2026-12-30", "concepto": "Ahorro adicional -> destinar a meta: Datacredito Jeffer", "categoria": "Ahorro meta", "monto": 195000, "id": "q11_i9"}], "saldo": 7643000}, {"titulo": "QUINCENA 12  -  15-Jan-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-01-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q12_i1"}, {"fecha": "2027-01-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q12_i2"}, {"fecha": "2027-01-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q12_i3"}, {"fecha": "2027-01-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q12_i4"}, {"fecha": "2027-01-15", "concepto": "Ahorro adicional -> destinar a meta: Datacredito Jeffer", "categoria": "Ahorro meta", "monto": 1280000, "id": "q12_i5"}], "saldo": 9268000}, {"titulo": "QUINCENA 13  -  30-Jan-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-01-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q13_i1"}, {"fecha": "2027-01-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q13_i2"}, {"fecha": "2027-01-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q13_i3"}, {"fecha": "2027-01-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q13_i4"}, {"fecha": "2027-01-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q13_i5"}, {"fecha": "2027-01-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q13_i6"}, {"fecha": "2027-01-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q13_i7"}, {"fecha": "2027-01-30", "concepto": "Ahorro adicional -> destinar a meta: Datacredito Jeffer", "categoria": "Ahorro meta", "monto": 425000, "id": "q13_i8"}], "saldo": 10038000}, {"titulo": "QUINCENA 14  -  15-Feb-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-02-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q14_i1"}, {"fecha": "2027-02-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q14_i2"}, {"fecha": "2027-02-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q14_i3"}, {"fecha": "2027-02-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q14_i4"}, {"fecha": "2027-02-15", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 1280000, "id": "q14_i5"}], "saldo": 11663000}, {"titulo": "QUINCENA 15  -  28-Feb-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-02-28", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q15_i1"}, {"fecha": "2027-02-28", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q15_i2"}, {"fecha": "2027-02-28", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q15_i3"}, {"fecha": "2027-02-28", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q15_i4"}, {"fecha": "2027-02-28", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q15_i5"}, {"fecha": "2027-02-28", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q15_i6"}, {"fecha": "2027-02-28", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q15_i7"}, {"fecha": "2027-02-28", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 425000, "id": "q15_i8"}], "saldo": 12433000}, {"titulo": "QUINCENA 16  -  15-Mar-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-03-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q16_i1"}, {"fecha": "2027-03-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q16_i2"}, {"fecha": "2027-03-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q16_i3"}, {"fecha": "2027-03-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q16_i4"}, {"fecha": "2027-03-15", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 1280000, "id": "q16_i5"}], "saldo": 14058000}, {"titulo": "QUINCENA 17  -  30-Mar-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-03-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q17_i1"}, {"fecha": "2027-03-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q17_i2"}, {"fecha": "2027-03-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q17_i3"}, {"fecha": "2027-03-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q17_i4"}, {"fecha": "2027-03-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q17_i5"}, {"fecha": "2027-03-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q17_i6"}, {"fecha": "2027-03-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q17_i7"}, {"fecha": "2027-03-30", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 425000, "id": "q17_i8"}], "saldo": 14828000}, {"titulo": "QUINCENA 18  -  15-Apr-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-04-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q18_i1"}, {"fecha": "2027-04-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q18_i2"}, {"fecha": "2027-04-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q18_i3"}, {"fecha": "2027-04-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q18_i4"}, {"fecha": "2027-04-15", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 1280000, "id": "q18_i5"}], "saldo": 16453000}, {"titulo": "QUINCENA 19  -  30-Apr-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-04-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q19_i1"}, {"fecha": "2027-04-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q19_i2"}, {"fecha": "2027-04-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q19_i3"}, {"fecha": "2027-04-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q19_i4"}, {"fecha": "2027-04-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q19_i5"}, {"fecha": "2027-04-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q19_i6"}, {"fecha": "2027-04-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q19_i7"}, {"fecha": "2027-04-30", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 425000, "id": "q19_i8"}], "saldo": 17223000}, {"titulo": "QUINCENA 20  -  15-May-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-05-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q20_i1"}, {"fecha": "2027-05-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q20_i2"}, {"fecha": "2027-05-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q20_i3"}, {"fecha": "2027-05-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q20_i4"}, {"fecha": "2027-05-15", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 1280000, "id": "q20_i5"}], "saldo": 18848000}, {"titulo": "QUINCENA 21  -  30-May-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-05-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q21_i1"}, {"fecha": "2027-05-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q21_i2"}, {"fecha": "2027-05-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q21_i3"}, {"fecha": "2027-05-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q21_i4"}, {"fecha": "2027-05-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q21_i5"}, {"fecha": "2027-05-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q21_i6"}, {"fecha": "2027-05-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q21_i7"}, {"fecha": "2027-05-30", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 425000, "id": "q21_i8"}], "saldo": 19618000}, {"titulo": "QUINCENA 22  -  15-Jun-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-06-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q22_i1"}, {"fecha": "2027-06-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q22_i2"}, {"fecha": "2027-06-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q22_i3"}, {"fecha": "2027-06-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q22_i4"}, {"fecha": "2027-06-15", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 1280000, "id": "q22_i5"}], "saldo": 21243000}, {"titulo": "QUINCENA 23  -  30-Jun-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-06-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q23_i1"}, {"fecha": "2027-06-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q23_i2"}, {"fecha": "2027-06-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q23_i3"}, {"fecha": "2027-06-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q23_i4"}, {"fecha": "2027-06-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q23_i5"}, {"fecha": "2027-06-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q23_i6"}, {"fecha": "2027-06-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q23_i7"}, {"fecha": "2027-06-30", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 425000, "id": "q23_i8"}], "saldo": 22013000}, {"titulo": "QUINCENA 24  -  15-Jul-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-07-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q24_i1"}, {"fecha": "2027-07-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q24_i2"}, {"fecha": "2027-07-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q24_i3"}, {"fecha": "2027-07-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q24_i4"}, {"fecha": "2027-07-15", "concepto": "Ahorro adicional -> destinar a meta: Moto Jeffer", "categoria": "Ahorro meta", "monto": 1280000, "id": "q24_i5"}], "saldo": 23638000}, {"titulo": "QUINCENA 25  -  30-Jul-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-07-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q25_i1"}, {"fecha": "2027-07-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q25_i2"}, {"fecha": "2027-07-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q25_i3"}, {"fecha": "2027-07-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q25_i4"}, {"fecha": "2027-07-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q25_i5"}, {"fecha": "2027-07-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q25_i6"}, {"fecha": "2027-07-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q25_i7"}, {"fecha": "2027-07-30", "concepto": "Ahorro adicional -> destinar a meta: Cuota inicial casa", "categoria": "Ahorro meta", "monto": 425000, "id": "q25_i8"}], "saldo": 24408000}, {"titulo": "QUINCENA 26  -  15-Aug-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-08-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q26_i1"}, {"fecha": "2027-08-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q26_i2"}, {"fecha": "2027-08-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q26_i3"}, {"fecha": "2027-08-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q26_i4"}, {"fecha": "2027-08-15", "concepto": "Ahorro adicional -> destinar a meta: Cuota inicial casa", "categoria": "Ahorro meta", "monto": 1280000, "id": "q26_i5"}], "saldo": 26033000}, {"titulo": "QUINCENA 27  -  30-Aug-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-08-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q27_i1"}, {"fecha": "2027-08-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q27_i2"}, {"fecha": "2027-08-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q27_i3"}, {"fecha": "2027-08-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q27_i4"}, {"fecha": "2027-08-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q27_i5"}, {"fecha": "2027-08-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q27_i6"}, {"fecha": "2027-08-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q27_i7"}, {"fecha": "2027-08-30", "concepto": "Ahorro adicional -> destinar a meta: Cuota inicial casa", "categoria": "Ahorro meta", "monto": 425000, "id": "q27_i8"}], "saldo": 26803000}, {"titulo": "QUINCENA 28  -  15-Sep-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-09-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q28_i1"}, {"fecha": "2027-09-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q28_i2"}, {"fecha": "2027-09-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q28_i3"}, {"fecha": "2027-09-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q28_i4"}, {"fecha": "2027-09-15", "concepto": "Ahorro adicional -> destinar a meta: Cuota inicial casa", "categoria": "Ahorro meta", "monto": 1280000, "id": "q28_i5"}], "saldo": 28428000}, {"titulo": "QUINCENA 29  -  30-Sep-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-09-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q29_i1"}, {"fecha": "2027-09-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q29_i2"}, {"fecha": "2027-09-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q29_i3"}, {"fecha": "2027-09-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q29_i4"}, {"fecha": "2027-09-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q29_i5"}, {"fecha": "2027-09-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q29_i6"}, {"fecha": "2027-09-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q29_i7"}, {"fecha": "2027-09-30", "concepto": "Ahorro adicional -> destinar a meta: Cuota inicial casa", "categoria": "Ahorro meta", "monto": 425000, "id": "q29_i8"}], "saldo": 29198000}, {"titulo": "QUINCENA 30  -  15-Oct-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-10-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q30_i1"}, {"fecha": "2027-10-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q30_i2"}, {"fecha": "2027-10-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q30_i3"}, {"fecha": "2027-10-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q30_i4"}, {"fecha": "2027-10-15", "concepto": "Ahorro adicional -> destinar a meta: Cuota inicial casa", "categoria": "Ahorro meta", "monto": 1280000, "id": "q30_i5"}], "saldo": 30823000}, {"titulo": "QUINCENA 31  -  30-Oct-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-10-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q31_i1"}, {"fecha": "2027-10-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q31_i2"}, {"fecha": "2027-10-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q31_i3"}, {"fecha": "2027-10-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q31_i4"}, {"fecha": "2027-10-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q31_i5"}, {"fecha": "2027-10-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q31_i6"}, {"fecha": "2027-10-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q31_i7"}, {"fecha": "2027-10-30", "concepto": "Ahorro adicional -> destinar a meta: Cuota inicial casa", "categoria": "Ahorro meta", "monto": 425000, "id": "q31_i8"}], "saldo": 31593000}, {"titulo": "QUINCENA 32  -  15-Nov-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-11-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q32_i1"}, {"fecha": "2027-11-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q32_i2"}, {"fecha": "2027-11-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q32_i3"}, {"fecha": "2027-11-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q32_i4"}, {"fecha": "2027-11-15", "concepto": "Ahorro adicional -> destinar a meta: Cuota inicial casa", "categoria": "Ahorro meta", "monto": 1280000, "id": "q32_i5"}], "saldo": 33218000}, {"titulo": "QUINCENA 33  -  30-Nov-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-11-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q33_i1"}, {"fecha": "2027-11-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q33_i2"}, {"fecha": "2027-11-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q33_i3"}, {"fecha": "2027-11-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q33_i4"}, {"fecha": "2027-11-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q33_i5"}, {"fecha": "2027-11-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q33_i6"}, {"fecha": "2027-11-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q33_i7"}, {"fecha": "2027-11-30", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q33_i8"}], "saldo": 33988000}, {"titulo": "QUINCENA 34  -  15-Dec-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-12-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q34_i1"}, {"fecha": "2027-12-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q34_i2"}, {"fecha": "2027-12-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q34_i3"}, {"fecha": "2027-12-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q34_i4"}, {"fecha": "2027-12-15", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 1280000, "id": "q34_i5"}], "saldo": 35613000}, {"titulo": "QUINCENA 35  -  30-Dec-2027  -  Ingreso total: $2,300,000", "items": [{"fecha": "2027-12-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q35_i1"}, {"fecha": "2027-12-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q35_i2"}, {"fecha": "2027-12-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q35_i3"}, {"fecha": "2027-12-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q35_i4"}, {"fecha": "2027-12-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q35_i5"}, {"fecha": "2027-12-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q35_i6"}, {"fecha": "2027-12-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q35_i7"}, {"fecha": "2027-12-30", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q35_i8"}], "saldo": 36383000}, {"titulo": "QUINCENA 36  -  15-Jan-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-01-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q36_i1"}, {"fecha": "2028-01-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q36_i2"}, {"fecha": "2028-01-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q36_i3"}, {"fecha": "2028-01-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q36_i4"}, {"fecha": "2028-01-15", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 1280000, "id": "q36_i5"}], "saldo": 38008000}, {"titulo": "QUINCENA 37  -  30-Jan-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-01-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q37_i1"}, {"fecha": "2028-01-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q37_i2"}, {"fecha": "2028-01-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q37_i3"}, {"fecha": "2028-01-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q37_i4"}, {"fecha": "2028-01-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q37_i5"}, {"fecha": "2028-01-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q37_i6"}, {"fecha": "2028-01-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q37_i7"}, {"fecha": "2028-01-30", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q37_i8"}], "saldo": 38778000}, {"titulo": "QUINCENA 38  -  15-Feb-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-02-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q38_i1"}, {"fecha": "2028-02-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q38_i2"}, {"fecha": "2028-02-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q38_i3"}, {"fecha": "2028-02-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q38_i4"}, {"fecha": "2028-02-15", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 1280000, "id": "q38_i5"}], "saldo": 40403000}, {"titulo": "QUINCENA 39  -  29-Feb-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-02-29", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q39_i1"}, {"fecha": "2028-02-29", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q39_i2"}, {"fecha": "2028-02-29", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q39_i3"}, {"fecha": "2028-02-29", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q39_i4"}, {"fecha": "2028-02-29", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q39_i5"}, {"fecha": "2028-02-29", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q39_i6"}, {"fecha": "2028-02-29", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q39_i7"}, {"fecha": "2028-02-29", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q39_i8"}], "saldo": 41173000}, {"titulo": "QUINCENA 40  -  15-Mar-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-03-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q40_i1"}, {"fecha": "2028-03-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q40_i2"}, {"fecha": "2028-03-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q40_i3"}, {"fecha": "2028-03-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q40_i4"}, {"fecha": "2028-03-15", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 1280000, "id": "q40_i5"}], "saldo": 42798000}, {"titulo": "QUINCENA 41  -  30-Mar-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-03-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q41_i1"}, {"fecha": "2028-03-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q41_i2"}, {"fecha": "2028-03-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q41_i3"}, {"fecha": "2028-03-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q41_i4"}, {"fecha": "2028-03-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q41_i5"}, {"fecha": "2028-03-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q41_i6"}, {"fecha": "2028-03-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q41_i7"}, {"fecha": "2028-03-30", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q41_i8"}], "saldo": 43568000}, {"titulo": "QUINCENA 42  -  15-Apr-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-04-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q42_i1"}, {"fecha": "2028-04-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q42_i2"}, {"fecha": "2028-04-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q42_i3"}, {"fecha": "2028-04-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q42_i4"}, {"fecha": "2028-04-15", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 1280000, "id": "q42_i5"}], "saldo": 45193000}, {"titulo": "QUINCENA 43  -  30-Apr-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-04-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q43_i1"}, {"fecha": "2028-04-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q43_i2"}, {"fecha": "2028-04-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q43_i3"}, {"fecha": "2028-04-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q43_i4"}, {"fecha": "2028-04-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q43_i5"}, {"fecha": "2028-04-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q43_i6"}, {"fecha": "2028-04-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q43_i7"}, {"fecha": "2028-04-30", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q43_i8"}], "saldo": 45963000}, {"titulo": "QUINCENA 44  -  15-May-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-05-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q44_i1"}, {"fecha": "2028-05-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q44_i2"}, {"fecha": "2028-05-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q44_i3"}, {"fecha": "2028-05-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q44_i4"}, {"fecha": "2028-05-15", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 1280000, "id": "q44_i5"}], "saldo": 47588000}, {"titulo": "QUINCENA 45  -  30-May-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-05-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q45_i1"}, {"fecha": "2028-05-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q45_i2"}, {"fecha": "2028-05-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q45_i3"}, {"fecha": "2028-05-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q45_i4"}, {"fecha": "2028-05-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q45_i5"}, {"fecha": "2028-05-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q45_i6"}, {"fecha": "2028-05-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q45_i7"}, {"fecha": "2028-05-30", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q45_i8"}], "saldo": 48358000}, {"titulo": "QUINCENA 46  -  15-Jun-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-06-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q46_i1"}, {"fecha": "2028-06-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q46_i2"}, {"fecha": "2028-06-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q46_i3"}, {"fecha": "2028-06-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q46_i4"}, {"fecha": "2028-06-15", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 1280000, "id": "q46_i5"}], "saldo": 49983000}, {"titulo": "QUINCENA 47  -  30-Jun-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-06-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q47_i1"}, {"fecha": "2028-06-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q47_i2"}, {"fecha": "2028-06-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q47_i3"}, {"fecha": "2028-06-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q47_i4"}, {"fecha": "2028-06-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q47_i5"}, {"fecha": "2028-06-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q47_i6"}, {"fecha": "2028-06-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q47_i7"}, {"fecha": "2028-06-30", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q47_i8"}], "saldo": 50753000}, {"titulo": "QUINCENA 48  -  15-Jul-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-07-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q48_i1"}, {"fecha": "2028-07-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q48_i2"}, {"fecha": "2028-07-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q48_i3"}, {"fecha": "2028-07-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q48_i4"}, {"fecha": "2028-07-15", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 1280000, "id": "q48_i5"}], "saldo": 52378000}, {"titulo": "QUINCENA 49  -  30-Jul-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-07-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q49_i1"}, {"fecha": "2028-07-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q49_i2"}, {"fecha": "2028-07-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q49_i3"}, {"fecha": "2028-07-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q49_i4"}, {"fecha": "2028-07-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q49_i5"}, {"fecha": "2028-07-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q49_i6"}, {"fecha": "2028-07-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q49_i7"}, {"fecha": "2028-07-30", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q49_i8"}], "saldo": 53148000}, {"titulo": "QUINCENA 50  -  15-Aug-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-08-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q50_i1"}, {"fecha": "2028-08-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q50_i2"}, {"fecha": "2028-08-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q50_i3"}, {"fecha": "2028-08-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q50_i4"}, {"fecha": "2028-08-15", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 1280000, "id": "q50_i5"}], "saldo": 54773000}, {"titulo": "QUINCENA 51  -  30-Aug-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-08-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q51_i1"}, {"fecha": "2028-08-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q51_i2"}, {"fecha": "2028-08-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q51_i3"}, {"fecha": "2028-08-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q51_i4"}, {"fecha": "2028-08-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q51_i5"}, {"fecha": "2028-08-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q51_i6"}, {"fecha": "2028-08-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q51_i7"}, {"fecha": "2028-08-30", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q51_i8"}], "saldo": 55543000}, {"titulo": "QUINCENA 52  -  15-Sep-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-09-15", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q52_i1"}, {"fecha": "2028-09-15", "concepto": "Internet -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 125000, "id": "q52_i2"}, {"fecha": "2028-09-15", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q52_i3"}, {"fecha": "2028-09-15", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q52_i4"}, {"fecha": "2028-09-15", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 1280000, "id": "q52_i5"}], "saldo": 57168000}, {"titulo": "QUINCENA 53  -  30-Sep-2028  -  Ingreso total: $2,300,000", "items": [{"fecha": "2028-09-30", "concepto": "Ahorro obligatorio (15% del salario) -> guardar en el fondo de ahorro", "categoria": "Ahorro", "monto": 345000, "id": "q53_i1"}, {"fecha": "2028-09-30", "concepto": "Arriendo -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 700000, "id": "q53_i2"}, {"fecha": "2028-09-30", "concepto": "Servicios Emcali -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q53_i3"}, {"fecha": "2028-09-30", "concepto": "Gas -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 30000, "id": "q53_i4"}, {"fecha": "2028-09-30", "concepto": "Datos Jeffer (celular) -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 50000, "id": "q53_i5"}, {"fecha": "2028-09-30", "concepto": "Ninera -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 200000, "id": "q53_i6"}, {"fecha": "2028-09-30", "concepto": "Mercado -> pago gasto fijo", "categoria": "Gasto fijo", "monto": 350000, "id": "q53_i7"}, {"fecha": "2028-09-30", "concepto": "Ahorro adicional -> destinar a meta: Carro", "categoria": "Ahorro meta", "monto": 425000, "id": "q53_i8"}], "saldo": 57938000}];
-const METAS = [{"num": 1, "nombre": "Licencia Lady", "valor": 1200000, "acumNecesario": 1200000, "fecha": "2026-09-15"}, {"num": 2, "nombre": "Licencia Jeffer", "valor": 1200000, "acumNecesario": 2400000, "fecha": "2026-10-15"}, {"num": 3, "nombre": "Datacredito Lady", "valor": 4000000, "acumNecesario": 6400000, "fecha": "2026-12-15"}, {"num": 4, "nombre": "Datacredito Jeffer", "valor": 3000000, "acumNecesario": 9400000, "fecha": "2027-01-30"}, {"num": 5, "nombre": "Moto Jeffer", "valor": 13000000, "acumNecesario": 22400000, "fecha": "2027-07-15"}, {"num": 6, "nombre": "Cuota inicial casa", "valor": 10000000, "acumNecesario": 32400000, "fecha": "2027-11-15"}, {"num": 7, "nombre": "Carro", "valor": 25000000, "acumNecesario": 57400000, "fecha": "2028-09-30"}];
-</script>
-<script>
-(function(){
-  const STORAGE_KEY = 'planFinanciero_checks_v1';
-  const STORAGE_META_KEY = 'planFinanciero_metas_v1';
-  const STORAGE_EXTRA_KEY = 'planFinanciero_extras_v1';
+/* ---------- Utilidades ---------- */
+function fmt(n){
+  n = Math.round(Number(n)||0);
+  return '$' + n.toLocaleString('es-CO');
+}
+function todayISO(){
+  const d = new Date();
+  return d.toISOString().slice(0,10);
+}
+function uid(){
+  return Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+}
+/* ---------- Avisos y confirmaciones propias (el visor bloquea alert/confirm/prompt) ---------- */
+let toastTimer = null;
+function showToast(msg){
+  const el = document.getElementById('toast');
+  if(!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ el.classList.remove('show'); }, 2600);
+}
+let pendingAction = null; // {type, id}
+function isPending(type, id){
+  return !!pendingAction && pendingAction.type===type && pendingAction.id===id;
+}
+function fmtDateShort(d){
+  return d.toLocaleDateString('es-CO', {day:'numeric', month:'short'});
+}
+function fmtDateFull(d){
+  return d.toLocaleDateString('es-CO', {day:'numeric', month:'short', year:'numeric'});
+}
 
-  function loadChecks(){
-    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }catch(e){ return {}; }
+/* ---------- Periodos quincenales ---------- */
+function periodKey(p){ return (p.y*12 + p.m)*2 + (p.half-1); }
+function periodFromKey(k){
+  const half = (k % 2) + 1;
+  const mTotal = Math.floor(k/2);
+  const y = Math.floor(mTotal/12);
+  const m = mTotal % 12;
+  return {y, m, half};
+}
+function periodAfter(p, steps){ return periodFromKey(periodKey(p)+steps); }
+function periodAfterMonths(p, steps){
+  const total = p.y*12 + p.m + steps;
+  const y = Math.floor(total/12);
+  const m = total % 12;
+  return {y, m, half:p.half};
+}
+function periodToDue(p){
+  if(p.half===1) return new Date(p.y, p.m, 15);
+  return new Date(p.y, p.m+1, 0);
+}
+function periodToRangeLabel(p){
+  const monthName = new Date(p.y,p.m,1).toLocaleDateString('es-CO',{month:'short'});
+  if(p.half===1) return '1–15 ' + monthName + ' ' + p.y;
+  const lastDay = new Date(p.y, p.m+1, 0).getDate();
+  return '16–' + lastDay + ' ' + monthName + ' ' + p.y;
+}
+function dateToPeriod(d){
+  return {y:d.getFullYear(), m:d.getMonth(), half: d.getDate()<=15?1:2};
+}
+function upcomingPeriods(n){
+  const cur = dateToPeriod(new Date());
+  const arr=[];
+  for(let i=0;i<n;i++){ arr.push(periodAfter(cur,i)); }
+  return arr;
+}
+function fixedNearestOccurrenceKey(d){
+  const curKey = periodKey(dateToPeriod(new Date()));
+  if(d.freq==='quincenal'){
+    const startKey = periodKey(dateToPeriod(new Date((d.startDate||todayISO())+'T00:00:00')));
+    return Math.max(startKey, curKey);
   }
-  function loadMetaChecks(){
-    try{ return JSON.parse(localStorage.getItem(STORAGE_META_KEY)) || {}; }catch(e){ return {}; }
+  const half = (Number(d.day)||1) <= 15 ? 1 : 2;
+  let p = dateToPeriod(new Date());
+  if(p.half !== half) p = periodAfter(p,1);
+  return periodKey(p);
+}
+function variableNearestOccurrenceKey(d){
+  return periodKey(dateToPeriod(new Date((d.date||todayISO())+'T00:00:00')));
+}
+function isFixedPaidNow(d){
+  return (d.paidKeys||[]).includes(fixedNearestOccurrenceKey(d));
+}
+function isVariablePaidNow(d){
+  return (d.paidKeys||[]).includes(variableNearestOccurrenceKey(d));
+}
+function toggleOccurrencePaid(kind, debtId, key){
+  const list = kind==='fixed' ? state.fixedDebts : state.variableDebts;
+  const d = list.find(x=>x.id===debtId);
+  if(!d) return;
+  if(!d.paidKeys) d.paidKeys = [];
+  const k = Number(key);
+  const idx = d.paidKeys.indexOf(k);
+  if(idx>=0) d.paidKeys.splice(idx,1); else d.paidKeys.push(k);
+  saveState(); renderAll();
+}
+function toggleGoalMilestone(goalId){
+  const g = state.goals.find(x=>x.id===goalId);
+  if(!g) return;
+  if(g.saved < g.target){
+    g.saved = g.target;
+    saveState(); renderAll();
   }
-  function loadExtras(){
-    try{ return JSON.parse(localStorage.getItem(STORAGE_EXTRA_KEY)) || {}; }catch(e){ return {}; }
-  }
-  let checks = loadChecks();
-  let metaChecks = loadMetaChecks();
-  // Gastos imprevistos: guardados por quincena (idx) de forma individual,
-  // no afectan a otras quincenas ni a las demás pestañas.
-  let extras = loadExtras();
+  // Si ya estaba completa, no se revierte el ahorro desde este checklist.
+}
 
-  function flashSaved(){
-    const dot = document.getElementById('saveDot');
-    const txt = document.getElementById('saveText');
-    dot.style.background = '#a8813f';
-    txt.textContent = 'Guardando...';
-    setTimeout(()=>{
-      dot.style.background = '#2f6b45';
-      txt.textContent = 'Guardado en este dispositivo';
-    }, 350);
-  }
+/* ---------- Estado por defecto ---------- */
+const DEFAULT_STATE = {
+  income: {
+    jeffersonGross: 2700000,
+    ladyGross: 1750905,
+    ladyTransporte: 249095,
+    descuentoPct: 8
+  },
+  gasolina: {
+    jefferson: 100000,
+    lady: 100000
+  },
+  goals: [
+    { id: uid(), name: 'Licencia Lady', target: 380000, saved: 0 },
+    { id: uid(), name: 'Licencia Jeffer', target: 1200000, saved: 0 },
+    { id: uid(), name: 'Datacrédito Lady', target: 4000000, saved: 0 },
+    { id: uid(), name: 'Datacrédito Jeffer', target: 3000000, saved: 0 },
+    { id: uid(), name: 'Moto Jeffer', target: 13000000, saved: 0 },
+    { id: uid(), name: 'Cuota inicial casa', target: 10000000, saved: 0 },
+    { id: uid(), name: 'Carro', target: 25000000, saved: 0 }
+  ],
+  fixedDebts: [
+    { id: uid(), name: 'Arriendo', amount: 800000, freq:'mensual', day: 30, paid: false },
+    { id: uid(), name: 'Servicios públicos', amount: 100000, freq:'mensual', day: 30, paid: false },
+    { id: uid(), name: 'Internet', amount: 75000, freq:'mensual', day: 15, paid: false },
+    { id: uid(), name: 'Datos Jeffer', amount: 55000, freq:'mensual', day: 15, paid: false },
+    { id: uid(), name: 'Datos Lady', amount: 23000, freq:'mensual', day: 15, paid: false },
+    { id: uid(), name: 'Universidad', amount: 400000, freq:'quincenal', startDate: '2026-11-01', paid: false },
+    { id: uid(), name: 'Mercado', amount: 400000, freq:'quincenal', startDate: '2026-09-15', paid: false },
+    { id: uid(), name: 'Cuidado de Thiago', amount: 150000, freq:'quincenal', startDate: '2026-09-15', paid: false }
+  ],
+  variableDebts: [
+    { id: uid(), name: 'Crédito', amount: 175000, current: 3, total: 4, freq: 'quincenal', date: '2026-09-30', paid: false },
+    { id: uid(), name: 'Don Víctor', amount: 290000, current: 5, total: 5, freq: 'quincenal', date: '2026-09-30', paid: false },
+    { id: uid(), name: 'Monet', amount: 170000, current: 1, total: 1, freq: 'única', date: '2026-09-30', paid: false },
+    { id: uid(), name: 'Dr. Peso', amount: 584000, current: 1, total: 1, freq: 'única', date: '2026-09-30', paid: false },
+    { id: uid(), name: 'Crédito quincenal', amount: 290000, current: 1, total: 5, freq: 'quincenal', date: '2026-09-30', paid: false }
+  ],
+  expenses: [],
+  _addedCredito290Sept2026: true,
+  _addedMercadoQuincenal: true,
+  _addedThiagoQuincenal: true
+};
 
-  function saveChecks(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(checks));
-    flashSaved();
-    renderSummary();
-    renderAhorroAcumulado();
-  }
-  function saveMetaChecks(){
-    localStorage.setItem(STORAGE_META_KEY, JSON.stringify(metaChecks));
-    flashSaved();
-    renderSummary();
-    renderAhorroAcumulado();
-  }
-  function saveExtras(){
-    localStorage.setItem(STORAGE_EXTRA_KEY, JSON.stringify(extras));
-    flashSaved();
-  }
+let state = null;
 
-  const fmt = (n) => {
-    if (n === null || n === undefined) return '';
-    const sign = n < 0 ? '-' : '';
-    return sign + '$' + Math.abs(n).toLocaleString('es-CO');
-  };
-
-  const dateFmt = (iso) => {
-    if(!iso) return '';
-    const [y,m,d] = iso.split('-');
-    const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-    return `${parseInt(d)}-${meses[parseInt(m)-1]}-${y}`;
-  };
-
-  // ---------- CHECKLIST RENDER ----------
-  function itemHasCheckbox(item){
-    return item.categoria !== 'Faltante';
-  }
-  // Las quincenas donde no alcanza para el ahorro muestran una alerta informativa
-  // en el encabezado, pero esa fila de "faltante" ya no se lista como renglón
-  // del checklist (no es un pago que se pueda marcar).
-  function itemVisibleEnChecklist(item){
-    return item.categoria !== 'Faltante';
-  }
-
-  function extrasDeQuincena(idx){
-    return extras[idx] || [];
-  }
-
-  function totalExtrasQuincena(idx){
-    return extrasDeQuincena(idx).reduce((sum, ex) => sum + (Number(ex.monto)||0), 0);
-  }
-
-  function buildQuincenaCard(q, idx){
-    const wrap = document.createElement('div');
-    wrap.className = 'quincena';
-    wrap.dataset.idx = idx;
-
-    const checkableItems = q.items.filter(itemHasCheckbox);
-    const checkedCount = checkableItems.filter(it => checks[it.id]).length;
-    const total = checkableItems.length;
-    const pct = total ? Math.round(checkedCount/total*100) : 0;
-    const hasAlert = q.items.some(it => it.categoria === 'Faltante');
-    if (hasAlert) wrap.classList.add('hay-alerta');
-    if (checkedCount === total && total>0) wrap.classList.add('completa');
-
-    // parse titulo like "QUINCENA 1  -  30-Jul-2026  -  Ingreso total: $2,300,000"
-    const parts = q.titulo.split(' - ').map(s=>s.trim());
-    const num = parts[0] || '';
-    const fechaTxt = parts[1] || '';
-    const ingresoTxt = parts[2] || '';
-
-    const header = document.createElement('div');
-    header.className = 'quincena-header';
-    header.innerHTML = `
-      <div>
-        <div class="quincena-title">${num} — ${fechaTxt}</div>
-        <div class="quincena-sub">${ingresoTxt}${hasAlert ? ' · ⚠ faltante' : ''}</div>
-      </div>
-      <div class="quincena-meta-right">
-        <span class="monto-marcado">$0</span>
-        <span class="quincena-sub">${checkedCount}/${total}</span>
-        <div class="mini-progress"><div class="mini-progress-inner" style="width:${pct}%"></div></div>
-        <span class="chevron">▶</span>
-      </div>
-    `;
-    header.addEventListener('click', ()=>{
-      wrap.classList.toggle('open');
-    });
-    wrap.appendChild(header);
-
-    const body = document.createElement('div');
-    body.className = 'quincena-body';
-
-    q.items.filter(itemVisibleEnChecklist).forEach(item=>{
-      const row = document.createElement('div');
-      row.className = 'item-row';
-
-      if (itemHasCheckbox(item)){
-        const cb = document.createElement('input');
-        cb.type = 'checkbox';
-        cb.checked = !!checks[item.id];
-        cb.addEventListener('change', ()=>{
-          checks[item.id] = cb.checked;
-          saveChecks();
-          concepto.classList.toggle('checked', cb.checked);
-          updateHeaderCounts(wrap, q, idx);
-        });
-        row.appendChild(cb);
-      } else {
-        const spacer = document.createElement('div');
-        spacer.style.width = '19px';
-        spacer.style.flexShrink = '0';
-        row.appendChild(spacer);
-      }
-
-      const concepto = document.createElement('div');
-      concepto.className = 'item-concepto' + (checks[item.id] ? ' checked' : '');
-      concepto.innerHTML = `${item.concepto}<span class="item-cat">${item.categoria}</span>`;
-      row.appendChild(concepto);
-
-      const monto = document.createElement('div');
-      monto.className = 'item-monto' + (item.monto < 0 ? ' neg' : '');
-      monto.textContent = fmt(item.monto);
-      row.appendChild(monto);
-
-      body.appendChild(row);
-    });
-
-    // ---- Gastos imprevistos de ESTA quincena (individual, no general) ----
-    const extraSection = document.createElement('div');
-    extraSection.className = 'extra-section';
-
-    const extraLabel = document.createElement('div');
-    extraLabel.className = 'extra-label';
-    extraLabel.textContent = 'Gastos imprevistos de esta quincena';
-    extraSection.appendChild(extraLabel);
-
-    const extraList = document.createElement('div');
-    extraList.className = 'extra-list';
-    extraSection.appendChild(extraList);
-
-    const extraTotalLine = document.createElement('div');
-    extraTotalLine.className = 'extra-total-line';
-    extraSection.appendChild(extraTotalLine);
-
-    const extraForm = document.createElement('div');
-    extraForm.className = 'extra-form';
-    extraForm.innerHTML = `
-      <input type="text" placeholder="Concepto del gasto imprevisto" class="extra-desc">
-      <input type="number" placeholder="Valor" min="0" step="1000" class="extra-monto">
-      <button type="button" class="extra-add">+ Añadir gasto</button>
-    `;
-    extraSection.appendChild(extraForm);
-
-    const saldoLine = document.createElement('div');
-    saldoLine.className = 'saldo-line';
-    body.appendChild(saldoLine);
-
-    function renderExtras(){
-      const list = extrasDeQuincena(idx);
-      extraList.innerHTML = '';
-      list.forEach(ex=>{
-        const row = document.createElement('div');
-        row.className = 'item-row extra';
-
-        const cb = document.createElement('input');
-        cb.type = 'checkbox';
-        cb.checked = !!ex.checked;
-        cb.addEventListener('change', ()=>{
-          ex.checked = cb.checked;
-          saveExtras();
-          concepto.classList.toggle('checked', cb.checked);
-          updateHeaderCounts(wrap, q, idx);
-        });
-        row.appendChild(cb);
-
-        const concepto = document.createElement('div');
-        concepto.className = 'item-concepto' + (ex.checked ? ' checked' : '');
-        concepto.innerHTML = `${ex.desc}<span class="item-cat">Imprevisto</span>`;
-        row.appendChild(concepto);
-
-        const monto = document.createElement('div');
-        monto.className = 'item-monto neg';
-        monto.textContent = fmt(ex.monto);
-        row.appendChild(monto);
-
-        const delBtn = document.createElement('button');
-        delBtn.className = 'extra-del';
-        delBtn.type = 'button';
-        delBtn.title = 'Eliminar gasto imprevisto';
-        delBtn.textContent = '×';
-        delBtn.addEventListener('click', ()=>{
-          extras[idx] = extrasDeQuincena(idx).filter(e => e.id !== ex.id);
-          saveExtras();
-          renderExtras();
-        });
-        row.appendChild(delBtn);
-
-        extraList.appendChild(row);
-      });
-
-      const totalExtra = totalExtrasQuincena(idx);
-      if (totalExtra > 0){
-        extraTotalLine.style.display = 'flex';
-        extraTotalLine.innerHTML = `<span>Total imprevistos de esta quincena</span><span>-${fmt(totalExtra)}</span>`;
-        saldoLine.classList.add('ajustado');
-        saldoLine.innerHTML = `<span>Saldo acumulado a esta fecha (ajustado)</span><span>${fmt(q.saldo - totalExtra)}</span>`;
-      } else {
-        extraTotalLine.style.display = 'none';
-        extraTotalLine.innerHTML = '';
-        saldoLine.classList.remove('ajustado');
-        saldoLine.innerHTML = `<span>Saldo acumulado a esta fecha</span><span>${fmt(q.saldo)}</span>`;
-      }
-    }
-    renderExtras();
-    updateHeaderCounts(wrap, q, idx);
-
-    extraForm.querySelector('.extra-add').addEventListener('click', ()=>{
-      const descInput = extraForm.querySelector('.extra-desc');
-      const montoInput = extraForm.querySelector('.extra-monto');
-      const desc = descInput.value.trim();
-      const monto = Number(montoInput.value);
-      if (!desc || !monto || monto <= 0){
-        alert('Escribe un concepto y un valor mayor a 0 para el gasto imprevisto.');
-        return;
-      }
-      if (!extras[idx]) extras[idx] = [];
-      extras[idx].push({ id: 'extra_' + idx + '_' + Date.now(), desc, monto, checked:false });
-      saveExtras();
-      descInput.value = '';
-      montoInput.value = '';
-      renderExtras();
-    });
-
-    body.insertBefore(extraSection, saldoLine);
-
-    wrap.appendChild(body);
-    return wrap;
-  }
-
-  function computeMontoMarcado(q, idx){
-    let total = 0;
-    q.items.filter(itemHasCheckbox).forEach(it=>{
-      if (checks[it.id]) total += it.monto;
-    });
-    extrasDeQuincena(idx).forEach(ex=>{
-      if (ex.checked) total += Number(ex.monto) || 0;
-    });
-    return total;
-  }
-
-  function updateHeaderCounts(wrap, q, idx){
-    const checkableItems = q.items.filter(itemHasCheckbox);
-    const checkedCount = checkableItems.filter(it => checks[it.id]).length;
-    const total = checkableItems.length;
-    const pct = total ? Math.round(checkedCount/total*100) : 0;
-    wrap.querySelector('.quincena-meta-right .quincena-sub').textContent = `${checkedCount}/${total}`;
-    wrap.querySelector('.mini-progress-inner').style.width = pct + '%';
-    wrap.classList.toggle('completa', checkedCount === total && total>0);
-    wrap.querySelector('.monto-marcado').textContent = fmt(computeMontoMarcado(q, idx));
-  }
-
-  function renderChecklist(){
-    const container = document.getElementById('quincenasContainer');
-    container.innerHTML = '';
-    QUINCENAS.forEach((q, idx)=>{
-      container.appendChild(buildQuincenaCard(q, idx));
-    });
-  }
-
-  // ---------- METAS RENDER ----------
-  function renderMetas(){
-    const container = document.getElementById('metasContainer');
-    container.innerHTML = '';
-    METAS.forEach(m=>{
-      const card = document.createElement('div');
-      card.className = 'meta-card' + (metaChecks[m.num] ? ' cumplida' : '');
-      card.innerHTML = `
-        <div class="meta-num">${m.num}</div>
-        <div class="meta-info">
-          <div class="meta-nombre">${m.nombre}</div>
-          <div class="meta-detail">Valor: ${fmt(m.valor)} · Acumulado necesario: ${fmt(m.acumNecesario)} · Fecha estimada: ${dateFmt(m.fecha)}</div>
-        </div>
-      `;
-      const cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.className = 'meta-check';
-      cb.checked = !!metaChecks[m.num];
-      cb.addEventListener('change', ()=>{
-        metaChecks[m.num] = cb.checked;
-        saveMetaChecks();
-        card.classList.toggle('cumplida', cb.checked);
-      });
-      card.appendChild(cb);
-      container.appendChild(card);
-    });
-  }
-
-  // ---------- AHORRO ACUMULADO (solo pestaña Metas) ----------
-  // Suma lo que ya se ha marcado como ahorrado (Ahorro + Ahorro meta) en el
-  // checklist quincenal, y resta el valor de las metas que ya se marcaron
-  // como pagadas (dinero que salió del ahorro acumulado). Esto es solo un
-  // cálculo de lectura para la pestaña Metas: no modifica ni el Resumen ni
-  // el Checklist quincenal.
-  function calcularAhorroAcumulado(){
-    let ahorrado = 0;
-    QUINCENAS.forEach(q=>{
-      q.items.forEach(it=>{
-        if ((it.categoria === 'Ahorro' || it.categoria === 'Ahorro meta') && checks[it.id]){
-          ahorrado += it.monto;
+function loadState(){
+  try{
+    const raw = localStorage.getItem('libretaFinancieraData');
+    if(raw){
+      state = JSON.parse(raw);
+      if(!state.fixedDebts) state.fixedDebts = [];
+      state.fixedDebts.forEach(d=>{
+        if(!d.freq) d.freq='mensual';
+        if(!d.paidKeys){
+          d.paidKeys = [];
+          if(d.paid){ d.paidKeys.push(fixedNearestOccurrenceKey(d)); }
         }
       });
-    });
-    let descontadoPorMetas = 0;
-    METAS.forEach(m=>{
-      if (metaChecks[m.num]) descontadoPorMetas += m.valor;
-    });
-    return { ahorrado, descontadoPorMetas, disponible: ahorrado - descontadoPorMetas };
+      if(state.variableDebts){
+        state.variableDebts.forEach(d=>{
+          if(!d.paidKeys){
+            d.paidKeys = [];
+            if(d.paid){ d.paidKeys.push(variableNearestOccurrenceKey(d)); }
+          }
+        });
+      }
+      if(!state.income){
+        state.income = { jeffersonGross: 2700000, ladyGross: 1750905, ladyTransporte: 249095, descuentoPct: 8 };
+      }
+      if(state.income.ladyTransporte === undefined){
+        state.income.ladyTransporte = 249095;
+      }
+      if(!state.gasolina){
+        state.gasolina = { jefferson: 100000, lady: 100000 };
+      }
+      if(state.variableDebts){
+        const legacy = state.variableDebts.find(d=>d.name==='Cuotas quincenales');
+        if(legacy){
+          legacy.name = 'Don Víctor';
+          legacy.current = 5;
+          legacy.total = 5;
+          legacy.date = '2026-09-30';
+          legacy.freq = 'quincenal';
+        }
+        const credito = state.variableDebts.find(d=>d.name==='Crédito cuota 3 de 4' || d.name==='Crédito');
+        if(credito && !state._fixedCreditoQuincena3de4){
+          credito.name = 'Crédito';
+          credito.current = 3;
+          credito.total = 4;
+          credito.date = '2026-09-30';
+          credito.freq = 'quincenal';
+        }
+        state._fixedCreditoQuincena3de4 = true;
+      }
+      if(!state._addedCredito290Sept2026){
+        if(!state.variableDebts) state.variableDebts = [];
+        state.variableDebts.push({ id: uid(), name: 'Crédito quincenal', amount: 290000, current: 1, total: 5, freq: 'quincenal', date: '2026-09-30', paid: false });
+        state._addedCredito290Sept2026 = true;
+      }
+      if(!state._addedMercadoQuincenal){
+        if(!state.fixedDebts) state.fixedDebts = [];
+        state.fixedDebts.push({ id: uid(), name: 'Mercado', amount: 400000, freq:'quincenal', startDate: '2026-09-15', paid: false });
+        state._addedMercadoQuincenal = true;
+      }
+      if(!state._addedThiagoQuincenal){
+        if(!state.fixedDebts) state.fixedDebts = [];
+        state.fixedDebts.push({ id: uid(), name: 'Cuidado de Thiago', amount: 150000, freq:'quincenal', startDate: '2026-09-15', paid: false });
+        state._addedThiagoQuincenal = true;
+      }
+      delete state.savingsPerQuincena;
+    } else {
+      state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+      saveState();
+    }
+  }catch(e){
+    console.error('Error cargando datos, usando valores por defecto', e);
+    state = JSON.parse(JSON.stringify(DEFAULT_STATE));
   }
-
-  function renderAhorroAcumulado(){
-    const valorEl = document.getElementById('ahorroAcumuladoValor');
-    const subEl = document.getElementById('ahorroAcumuladoSub');
-    if (!valorEl) return;
-    const { ahorrado, descontadoPorMetas, disponible } = calcularAhorroAcumulado();
-    valorEl.textContent = fmt(disponible);
-    subEl.textContent = `Ahorrado marcado en el checklist: ${fmt(ahorrado)} · Descontado por metas ya pagadas: ${fmt(descontadoPorMetas)}`;
+}
+function saveState(){
+  try{
+    localStorage.setItem('libretaFinancieraData', JSON.stringify(state));
+  }catch(e){
+    console.error('No se pudo guardar', e);
   }
+}
 
-  // ---------- PRIORIDAD LIST (resumen) ----------
-  function renderPrioridad(){
-    const ol = document.getElementById('prioridadList');
-    ol.innerHTML = '';
-    METAS.forEach(m=>{
-      const li = document.createElement('li');
-      li.textContent = `${m.nombre} — ${fmt(m.valor)}`;
-      if (metaChecks[m.num]) li.classList.add('done');
-      ol.appendChild(li);
-    });
-  }
+/* ---------- Tabs ---------- */
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
 
-  // ---------- SUMMARY ----------
-  function renderSummary(){
-    let totalCheckable = 0, totalChecked = 0;
-    QUINCENAS.forEach(q=>{
-      q.items.filter(itemHasCheckbox).forEach(it=>{
-        totalCheckable++;
-        if (checks[it.id]) totalChecked++;
+function toggleFixedFreqFields(){
+  const freq = document.getElementById('fixedFreq').value;
+  document.getElementById('fixedDayField').style.display = freq==='mensual' ? '' : 'none';
+  document.getElementById('fixedStartField').style.display = freq==='quincenal' ? '' : 'none';
+}
+
+/* ---------- Ingresos y sobrante disponible ---------- */
+function netIncomePerQuincena(){
+  const desc = (Number(state.income.descuentoPct)||0)/100;
+  const jeffNet = Number(state.income.jeffersonGross||0) * (1-desc);
+  const ladyNet = Number(state.income.ladyGross||0) * (1-desc) + Number(state.income.ladyTransporte||0);
+  return (jeffNet + ladyNet) / 2;
+}
+function gasolinaReserveTotal(){
+  return Number(state.gasolina.jefferson||0) + Number(state.gasolina.lady||0);
+}
+function leftoverForPeriod(bucket){
+  return netIncomePerQuincena() - bucket.total - gasolinaReserveTotal();
+}
+function updateIncome(){
+  state.income.jeffersonGross = Number(document.getElementById('incJefferson').value) || 0;
+  state.income.ladyGross = Number(document.getElementById('incLady').value) || 0;
+  state.income.ladyTransporte = Number(document.getElementById('incLadyTransporte').value) || 0;
+  state.income.descuentoPct = Number(document.getElementById('incDescuento').value) || 0;
+  state.gasolina.jefferson = Number(document.getElementById('gasJefferson').value) || 0;
+  state.gasolina.lady = Number(document.getElementById('gasLady').value) || 0;
+  saveState(); renderAll();
+}
+
+/* ---------- Periodos de deuda (compartido por Quincenas y Proyección) ---------- */
+function computePeriodBuckets(n){
+  const periods = upcomingPeriods(n);
+  const buckets = periods.map(p=>({ period:p, key:periodKey(p), items:[], total:0 }));
+  const bucketByKey = {};
+  buckets.forEach(b=>{ bucketByKey[b.key]=b; });
+  const minKey = buckets[0].key, maxKey = buckets[buckets.length-1].key;
+
+  state.fixedDebts.forEach(d=>{
+    if(d.freq==='quincenal'){
+      const startP = dateToPeriod(new Date((d.startDate||todayISO())+'T00:00:00'));
+      const startKey = periodKey(startP);
+      buckets.forEach(b=>{
+        if(b.key >= startKey){
+          const paid = (d.paidKeys||[]).includes(b.key);
+          b.items.push({ label:d.name, amount:d.amount, paid, debtId:d.id, key:b.key, kind:'fixed' });
+          if(!paid) b.total += Number(d.amount||0);
+        }
       });
-    });
-    const pct = totalCheckable ? Math.round(totalChecked/totalCheckable*100) : 0;
-    document.getElementById('globalProgressBar').style.width = pct + '%';
-    document.getElementById('globalProgressText').textContent = `${totalChecked} de ${totalCheckable} pagos marcados (${pct}%)`;
-    renderPrioridad();
+    } else {
+      const half = (Number(d.day)||1) <= 15 ? 1 : 2;
+      buckets.forEach(b=>{
+        if(b.period.half === half){
+          const paid = (d.paidKeys||[]).includes(b.key);
+          b.items.push({ label:d.name, amount:d.amount, paid, debtId:d.id, key:b.key, kind:'fixed' });
+          if(!paid) b.total += Number(d.amount||0);
+        }
+      });
+    }
+  });
+
+  state.variableDebts.forEach(d=>{
+    const remaining = Math.max(1, (Number(d.total)||1) - (Number(d.current)||1) + 1);
+    const base = dateToPeriod(new Date((d.date||todayISO())+'T00:00:00'));
+    for(let i=0;i<remaining;i++){
+      let occ;
+      if(d.freq==='quincenal') occ = periodAfter(base, i);
+      else if(d.freq==='mensual') occ = periodAfterMonths(base, i);
+      else occ = base;
+      const k = periodKey(occ);
+      if(k>=minKey && k<=maxKey && bucketByKey[k]){
+        const cuotaNum = (Number(d.current)||1) + i;
+        const paid = (d.paidKeys||[]).includes(k);
+        bucketByKey[k].items.push({ label: d.name + ' (cuota '+cuotaNum+'/'+d.total+')', amount:d.amount, paid, debtId:d.id, key:k, kind:'variable' });
+        if(!paid) bucketByKey[k].total += Number(d.amount||0);
+      }
+    }
+  });
+
+  return buckets;
+}
+
+/* ---------- Proyección de metas: usa el sobrante real de cada quincena ---------- */
+function computeGoalProjectionsDetailed(maxPeriods){
+  maxPeriods = maxPeriods || 120;
+  const projections = {};
+  let lastIndex = -1;
+  const remaining = state.goals.map(g=>Math.max(0, Number(g.target||0)-Number(g.saved||0)));
+  const buckets = computePeriodBuckets(maxPeriods);
+  if(remaining.some(r=>r>0)){
+    for(let idx=0; idx<buckets.length; idx++){
+      if(!remaining.some(r=>r>0)) break;
+      let budget = Math.max(0, leftoverForPeriod(buckets[idx]));
+      if(budget<=0) continue;
+      for(let i=0;i<state.goals.length;i++){
+        if(remaining[i] <= 0) continue;
+        const alloc = Math.min(budget, remaining[i]);
+        remaining[i] -= alloc;
+        budget -= alloc;
+        if(remaining[i] === 0 && !projections[state.goals[i].id]){
+          projections[state.goals[i].id] = periodToDue(buckets[idx].period);
+          lastIndex = idx;
+        }
+        if(budget <= 0) break;
+      }
+    }
+  }
+  const allFunded = remaining.every(r=>r<=0);
+  return { projections, lastIndex, buckets, allFunded };
+}
+function computeGoalProjections(){
+  return computeGoalProjectionsDetailed(120).projections;
+}
+
+/* ---------- Render: Resumen ---------- */
+function renderResumen(){
+  const nextGoal = state.goals.find(g => g.saved < g.target);
+  const box = document.getElementById('priorityBox');
+  if(nextGoal){
+    const pct = Math.min(100, Math.round((nextGoal.saved / nextGoal.target) * 100));
+    const projections = computeGoalProjections();
+    const proj = projections[nextGoal.id];
+    box.innerHTML = `
+      <div class="priority-box">
+        <div class="eyebrow">Meta prioritaria actual</div>
+        <div class="name">${nextGoal.name}</div>
+        <div class="figures">
+          <span>${fmt(nextGoal.saved)} ahorrado</span>
+          <span>${fmt(nextGoal.target)} meta</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <div style="margin-top:8px; font-size:0.8rem; color:var(--ink-soft);">Faltan ${fmt(nextGoal.target - nextGoal.saved)}${proj ? ' · proyección: '+fmtDateFull(proj) : ''}</div>
+      </div>`;
+  } else {
+    box.innerHTML = `<div class="priority-box"><div class="name">Todas las metas están completas 🎉</div></div>`;
   }
 
-  // ---------- SEARCH ----------
-  document.getElementById('searchInput').addEventListener('input', (e)=>{
-    const term = e.target.value.trim().toLowerCase();
-    const cards = document.querySelectorAll('#quincenasContainer .quincena');
-    cards.forEach((card, idx)=>{
-      const q = QUINCENAS[idx];
-      if (!term){
-        card.style.display = '';
-        return;
-      }
-      const match = q.items.some(it => it.concepto.toLowerCase().includes(term)) ||
-                    q.titulo.toLowerCase().includes(term);
-      card.style.display = match ? '' : 'none';
-      if (match) card.classList.add('open');
-    });
-  });
+  const totalSaved = state.goals.reduce((s,g)=>s+Number(g.saved||0),0);
+  const totalTarget = state.goals.reduce((s,g)=>s+Number(g.target||0),0);
+  const totalFixed = state.fixedDebts.filter(d=>d.freq==='mensual').reduce((s,d)=>s+Number(d.amount||0),0);
+  const pendingFixed = state.fixedDebts.filter(d=>!isFixedPaidNow(d)).reduce((s,d)=>s+Number(d.amount||0),0);
+  const pendingVariable = state.variableDebts.filter(d=>!isVariablePaidNow(d)).reduce((s,d)=>s+Number(d.amount||0),0);
+  const now = new Date();
+  const monthKey = now.toISOString().slice(0,7);
+  const expensesThisMonth = state.expenses.filter(e=>e.date && e.date.slice(0,7)===monthKey).reduce((s,e)=>s+Number(e.amount||0),0);
+  const nextBucket = computePeriodBuckets(1)[0];
+  const nextLeftover = leftoverForPeriod(nextBucket);
 
-  document.getElementById('btnExpandAll').addEventListener('click', ()=>{
-    document.querySelectorAll('#quincenasContainer .quincena').forEach(c=>c.classList.add('open'));
-  });
-  document.getElementById('btnCollapseAll').addEventListener('click', ()=>{
-    document.querySelectorAll('#quincenasContainer .quincena').forEach(c=>c.classList.remove('open'));
-  });
-  document.getElementById('btnJumpNext').addEventListener('click', ()=>{
-    document.querySelectorAll('#quincenasContainer .quincena').forEach(c=>c.classList.remove('open'));
-    for (let idx=0; idx<QUINCENAS.length; idx++){
-      const q = QUINCENAS[idx];
-      const checkable = q.items.filter(itemHasCheckbox);
-      const done = checkable.every(it=>checks[it.id]);
-      if (!done){
-        const card = document.querySelector(`#quincenasContainer .quincena[data-idx="${idx}"]`);
-        card.classList.add('open');
-        card.scrollIntoView({behavior:'smooth', block:'center'});
-        // switch tab if needed
-        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-        document.querySelector('[data-panel="checklist"]').classList.add('active');
-        document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-        document.getElementById('panel-checklist').classList.add('active');
-        return;
-      }
+  document.getElementById('summaryCards').innerHTML = `
+    <div class="card">
+      <div class="label">Ahorrado en total</div>
+      <div class="value green">${fmt(totalSaved)}</div>
+    </div>
+    <div class="card">
+      <div class="label">Meta total (todas)</div>
+      <div class="value">${fmt(totalTarget)}</div>
+    </div>
+    <div class="card">
+      <div class="label">Fijas mensuales</div>
+      <div class="value wine">${fmt(totalFixed)}</div>
+    </div>
+    <div class="card">
+      <div class="label">Pendiente este periodo</div>
+      <div class="value wine">${fmt(pendingFixed + pendingVariable)}</div>
+    </div>
+    <div class="card">
+      <div class="label">Gastos este mes</div>
+      <div class="value">${fmt(expensesThisMonth)}</div>
+    </div>
+    <div class="card">
+      <div class="label">Sobrante próxima quincena</div>
+      <div class="value ${nextLeftover>=0?'green':'wine'}">${fmt(nextLeftover)}</div>
+    </div>
+  `;
+}
+
+/* ---------- Render: Metas ---------- */
+function renderGoals(){
+  document.getElementById('incJefferson').value = state.income.jeffersonGross || '';
+  document.getElementById('incLady').value = state.income.ladyGross || '';
+  document.getElementById('incLadyTransporte').value = state.income.ladyTransporte || '';
+  document.getElementById('incDescuento').value = state.income.descuentoPct || '';
+  document.getElementById('gasJefferson').value = state.gasolina.jefferson || '';
+  document.getElementById('gasLady').value = state.gasolina.lady || '';
+  const netQ = netIncomePerQuincena();
+  const gasTotal = gasolinaReserveTotal();
+  document.getElementById('incomeSummary').textContent =
+    'Ingreso neto conjunto por quincena: ' + fmt(netQ) + ' (ya con seguridad social descontada) · reserva de gasolina: ' + fmt(gasTotal);
+  const projections = computeGoalProjections();
+  const list = document.getElementById('goalsList');
+  if(state.goals.length===0){
+    list.innerHTML = '<div class="empty">Aún no hay metas. Agrega la primera abajo.</div>';
+    return;
+  }
+  list.innerHTML = state.goals.map((g, idx)=>{
+    const pct = Math.min(100, Math.round((g.saved/g.target)*100)) || 0;
+    const complete = g.saved >= g.target;
+    const proj = projections[g.id];
+    let projTxt = '';
+    if(complete){ projTxt = 'Meta completa'; }
+    else if(proj){ projTxt = 'Proyección: ' + fmtDateFull(proj); }
+    else { projTxt = 'Con el sobrante actual no alcanza a completarse en los próximos 5 años'; }
+    const delPending = isPending('goal-del', g.id);
+    return `
+    <div class="row">
+      <div class="row-top">
+        <div class="row-name-wrap">
+          <div class="row-name">${idx+1}. ${g.name}</div>
+        </div>
+        <div class="row-amount ${complete?'green':''}">${fmt(g.saved)} / ${fmt(g.target)}</div>
+      </div>
+      <div class="field-row" style="margin-top:8px;">
+        <div class="field"><label>Ahorrado</label><input type="number" min="0" value="${g.saved}" onchange="updateGoalSaved('${g.id}', this.value)"></div>
+        <div class="field"><label>Meta</label><input type="number" min="1" value="${g.target}" onchange="updateGoalTarget('${g.id}', this.value)"></div>
+      </div>
+      <div class="row-progress">
+        <div class="figures"><span>${pct}%</span><span>${complete?'Completa':'Faltan '+fmt(g.target-g.saved)}</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+      </div>
+      ${projTxt ? `<div class="row-projection">${projTxt}</div>` : ''}
+      <div class="row-actions">
+        <button class="danger" onclick="deleteGoal('${g.id}')">${delPending ? 'confirmar eliminar' : 'eliminar'}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function addGoal(){
+  const name = document.getElementById('goalName').value.trim();
+  const target = Number(document.getElementById('goalTarget').value);
+  if(!name || !target){ showToast('Escribe un nombre y una meta válida.'); return; }
+  state.goals.push({ id: uid(), name, target, saved: 0 });
+  document.getElementById('goalName').value='';
+  document.getElementById('goalTarget').value='';
+  saveState(); renderAll();
+}
+function updateGoalSaved(id, val){
+  const g = state.goals.find(x=>x.id===id);
+  if(!g) return;
+  const n = Number(val);
+  g.saved = isNaN(n) ? 0 : Math.max(0, n);
+  saveState(); renderAll();
+}
+function updateGoalTarget(id, val){
+  const g = state.goals.find(x=>x.id===id);
+  if(!g) return;
+  const n = Number(val);
+  if(isNaN(n) || n<=0){ showToast('La meta debe ser un número mayor a 0.'); renderAll(); return; }
+  g.target = n;
+  saveState(); renderAll();
+}
+function deleteGoal(id){
+  if(!isPending('goal-del', id)){ pendingAction = {type:'goal-del', id}; renderAll(); return; }
+  pendingAction = null;
+  state.goals = state.goals.filter(g=>g.id!==id);
+  saveState(); renderAll();
+}
+
+/* ---------- Render: Deudas fijas ---------- */
+function renderFixed(){
+  const list = document.getElementById('fixedList');
+  const resetBtn = document.getElementById('resetFixedBtn');
+  if(resetBtn){
+    resetBtn.textContent = isPending('fixed-reset', '__all__')
+      ? 'Confirmar: marcar todo como pendiente'
+      : 'Reiniciar periodo (marcar todo como pendiente)';
+  }
+  if(state.fixedDebts.length===0){
+    list.innerHTML = '<div class="empty">No hay deudas fijas registradas.</div>';
+    return;
+  }
+  list.innerHTML = state.fixedDebts.map(d=>{
+    const sub = d.freq==='quincenal'
+      ? 'Cada quincena, desde el ' + (d.startDate ? fmtDateFull(new Date(d.startDate+'T00:00:00')) : '—')
+      : 'Se paga el día ' + d.day + ' de cada mes';
+    const paidNow = isFixedPaidNow(d);
+    const delPending = isPending('fixed-del', d.id);
+    return `
+    <div class="row">
+      <div class="row-top">
+        <div class="row-name-wrap">
+          <div class="row-name">${d.name}</div>
+          <div class="row-sub">${sub}</div>
+          <span class="status-pill ${paidNow?'paid':'pending'}">${paidNow?'Pagado este periodo':'Pendiente'}</span>
+        </div>
+        <div class="row-amount wine">${fmt(d.amount)}</div>
+      </div>
+      <div class="row-actions">
+        <button class="ok" onclick="toggleFixedPaid('${d.id}')">${paidNow?'marcar pendiente':'marcar pagado'}</button>
+        <button class="danger" onclick="deleteFixed('${d.id}')">${delPending?'confirmar eliminar':'eliminar'}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function addFixed(){
+  const name = document.getElementById('fixedName').value.trim();
+  const amount = Number(document.getElementById('fixedAmount').value);
+  const freq = document.getElementById('fixedFreq').value;
+  if(!name || !amount){ showToast('Escribe un nombre y un valor válido.'); return; }
+  const entry = { id: uid(), name, amount, freq, paidKeys:[] };
+  if(freq==='mensual'){
+    entry.day = Number(document.getElementById('fixedDay').value) || 1;
+  } else {
+    entry.startDate = document.getElementById('fixedStart').value || todayISO();
+  }
+  state.fixedDebts.push(entry);
+  document.getElementById('fixedName').value='';
+  document.getElementById('fixedAmount').value='';
+  document.getElementById('fixedDay').value='';
+  document.getElementById('fixedStart').value='';
+  saveState(); renderAll();
+}
+function toggleFixedPaid(id){
+  const d = state.fixedDebts.find(x=>x.id===id);
+  if(!d) return;
+  toggleOccurrencePaid('fixed', d.id, fixedNearestOccurrenceKey(d));
+}
+function deleteFixed(id){
+  if(!isPending('fixed-del', id)){ pendingAction = {type:'fixed-del', id}; renderAll(); return; }
+  pendingAction = null;
+  state.fixedDebts = state.fixedDebts.filter(d=>d.id!==id);
+  saveState(); renderAll();
+}
+function resetFixedMonth(){
+  if(!isPending('fixed-reset', '__all__')){ pendingAction = {type:'fixed-reset', id:'__all__'}; renderAll(); return; }
+  pendingAction = null;
+  state.fixedDebts.forEach(d=>d.paidKeys=[]);
+  saveState(); renderAll();
+}
+
+/* ---------- Render: Deudas variables ---------- */
+function renderVariable(){
+  const list = document.getElementById('variableList');
+  if(state.variableDebts.length===0){
+    list.innerHTML = '<div class="empty">No hay deudas variables registradas.</div>';
+    return;
+  }
+  list.innerHTML = state.variableDebts.map(d=>{
+    const dateTxt = d.date ? fmtDateShort(new Date(d.date+'T00:00:00')) : 'sin fecha';
+    const paidNow = isVariablePaidNow(d);
+    const delPending = isPending('variable-del', d.id);
+    return `
+    <div class="row">
+      <div class="row-top">
+        <div class="row-name-wrap">
+          <div class="row-name">${d.name}</div>
+          <div class="row-sub">${d.freq} · cuota ${d.current} de ${d.total} · próximo pago: ${dateTxt}</div>
+          <span class="status-pill ${paidNow?'paid':'pending'}">${paidNow?'Pagada':'Pendiente'}</span>
+        </div>
+        <div class="row-amount wine">${fmt(d.amount)}</div>
+      </div>
+      <div class="row-actions">
+        <button class="ok" onclick="toggleVariablePaid('${d.id}')">${paidNow?'marcar pendiente':'marcar pagada'}</button>
+        <button onclick="advanceVariable('${d.id}')">siguiente cuota</button>
+        <button class="danger" onclick="deleteVariable('${d.id}')">${delPending?'confirmar eliminar':'eliminar'}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function addVariable(){
+  const name = document.getElementById('varName').value.trim();
+  const amount = Number(document.getElementById('varAmount').value);
+  const current = Number(document.getElementById('varCurrent').value) || 1;
+  const total = Number(document.getElementById('varTotal').value) || 1;
+  const freq = document.getElementById('varFreq').value;
+  const date = document.getElementById('varDate').value || todayISO();
+  if(!name || !amount){ showToast('Escribe un nombre y un valor válido.'); return; }
+  state.variableDebts.push({ id: uid(), name, amount, current, total, freq, date, paidKeys:[] });
+  document.getElementById('varName').value='';
+  document.getElementById('varAmount').value='';
+  document.getElementById('varCurrent').value=1;
+  document.getElementById('varTotal').value=1;
+  document.getElementById('varDate').value='';
+  saveState(); renderAll();
+}
+function toggleVariablePaid(id){
+  const d = state.variableDebts.find(x=>x.id===id);
+  if(!d) return;
+  toggleOccurrencePaid('variable', d.id, variableNearestOccurrenceKey(d));
+}
+function advanceVariable(id){
+  const d = state.variableDebts.find(x=>x.id===id);
+  if(!d) return;
+  if(d.current < d.total){
+    const base = dateToPeriod(new Date((d.date||todayISO())+'T00:00:00'));
+    let nextP;
+    if(d.freq==='quincenal') nextP = periodAfter(base,1);
+    else if(d.freq==='mensual') nextP = periodAfterMonths(base,1);
+    else nextP = base;
+    d.date = periodToDue(nextP).toISOString().slice(0,10);
+    d.current += 1;
+  } else {
+    showToast('Ya vas en la última cuota registrada. Edita la fecha o elimínala si ya terminó.');
+  }
+  saveState(); renderAll();
+}
+function deleteVariable(id){
+  if(!isPending('variable-del', id)){ pendingAction = {type:'variable-del', id}; renderAll(); return; }
+  pendingAction = null;
+  state.variableDebts = state.variableDebts.filter(d=>d.id!==id);
+  saveState(); renderAll();
+}
+
+/* ---------- Render: Por quincena ---------- */
+function renderQuincenas(){
+  const CAP = 240; // límite de seguridad (~10 años)
+  const detailed = computeGoalProjectionsDetailed(CAP);
+  let count = detailed.lastIndex >= 0 ? detailed.lastIndex + 1 : 6;
+  count = Math.max(6, Math.min(count, CAP));
+  const buckets = detailed.buckets.slice(0, count);
+
+  const bucketDueMap = {};
+  buckets.forEach(b=>{ bucketDueMap[periodToDue(b.period).toISOString().slice(0,10)] = b; });
+  state.goals.forEach(g=>{
+    const projDate = detailed.projections[g.id];
+    if(!projDate) return;
+    const bucket = bucketDueMap[projDate.toISOString().slice(0,10)];
+    if(bucket){
+      bucket.items.unshift({ label: 'Meta: '+g.name, amount: g.target, kind:'goal', debtId: g.id, key: bucket.key, paid: g.saved>=g.target });
     }
-    alert('¡Todas las quincenas están completas!');
   });
 
-  // ---------- EXPORT / RESET ----------
-  document.getElementById('btnExport').addEventListener('click', ()=>{
-    const data = { checks, metaChecks, extras, exportado: new Date().toISOString() };
-    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'plan-financiero-respaldo.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+  const note = document.getElementById('periodsNote');
+  if(state.goals.every(g=>g.saved>=g.target)){
+    note.textContent = 'Todas las metas están completas — se muestran las próximas quincenas.';
+  } else if(!detailed.allFunded){
+    note.textContent = 'Con el sobrante actual no todas las metas se completan dentro de los próximos ' + Math.round(CAP/2) + ' meses; se muestra hasta ahí. Ajusta ingresos, deudas o gasolina para ver más.';
+  } else {
+    note.textContent = 'Se muestran las quincenas hasta que todas las metas quedan completas. Las metas que se cumplen en cada periodo aparecen marcadas con 🎯.';
+  }
 
-  document.getElementById('btnReset').addEventListener('click', ()=>{
-    if (confirm('Esto borrará todas las casillas marcadas y los gastos imprevistos guardados en este dispositivo. ¿Continuar?')){
-      checks = {};
-      metaChecks = {};
-      extras = {};
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(STORAGE_META_KEY);
-      localStorage.removeItem(STORAGE_EXTRA_KEY);
-      renderChecklist();
-      renderMetas();
-      renderSummary();
-      renderAhorroAcumulado();
-      flashSaved();
-    }
-  });
+  const container = document.getElementById('periodsList');
+  container.innerHTML = buckets.map(b=>{
+    const itemsHtml = b.items.length
+      ? b.items.map(it=>{
+          const isGoal = it.kind==='goal';
+          const toggleCall = isGoal
+            ? `toggleGoalMilestone('${it.debtId}')`
+            : `toggleOccurrencePaid('${it.kind}','${it.debtId}','${it.key}')`;
+          const labelText = (isGoal ? '🎯 ' : '') + it.label;
+          return `
+        <label class="period-item checkable">
+          <span class="p-item-left">
+            <input type="checkbox" ${it.paid?'checked':''} onchange="${toggleCall}">
+            <span class="p-item-label${it.paid?' paid-strike':''}${isGoal?' goal-label':''}">${labelText}</span>
+          </span>
+          <span class="p-item-amount">${fmt(it.amount)}</span>
+        </label>`;
+        }).join('')
+      : `<div class="period-empty">Sin deudas registradas en este periodo.</div>`;
+    const leftover = leftoverForPeriod(b);
+    return `
+      <div class="period-card">
+        <div class="period-head">
+          <span class="p-label">${periodToRangeLabel(b.period)}</span>
+          <span class="p-total">${fmt(b.total + gasolinaReserveTotal())}</span>
+        </div>
+        <div class="period-items">${itemsHtml}
+          <div class="period-item"><span class="p-item-left"><span class="p-item-label">Gasolina (Jefferson + Lady)</span></span><span class="p-item-amount">${fmt(gasolinaReserveTotal())}</span></div>
+        </div>
+        <div class="period-head" style="border-top:1px solid var(--line); border-bottom:none;">
+          <span class="p-label" style="font-size:0.82rem;">Sobrante para ahorro</span>
+          <span class="p-total" style="color:${leftover>=0?'var(--green)':'var(--wine)'}">${fmt(leftover)}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
 
-  // ---------- TABS ----------
-  document.querySelectorAll('.tab-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
-    });
-  });
+/* ---------- Render: Gastos ---------- */
+function renderExpenses(){
+  const list = document.getElementById('expenseList');
+  const sorted = [...state.expenses].sort((a,b)=> (b.date||'').localeCompare(a.date||''));
+  if(sorted.length===0){
+    list.innerHTML = '<div class="empty">Aún no has registrado gastos.</div>';
+  } else {
+    list.innerHTML = sorted.map(e=>{
+      const dateTxt = e.date ? fmtDateShort(new Date(e.date+'T00:00:00')) : '';
+      const delPending = isPending('expense-del', e.id);
+      return `
+      <div class="row">
+        <div class="row-top">
+          <div class="row-name-wrap">
+            <div class="row-name">${e.category || 'Sin categoría'}</div>
+            <div class="row-sub">${dateTxt}${e.desc ? ' · '+e.desc : ''}</div>
+          </div>
+          <div class="row-amount wine">${fmt(e.amount)}</div>
+        </div>
+        <div class="row-actions">
+          <button class="danger" onclick="deleteExpense('${e.id}')">${delPending?'confirmar eliminar':'eliminar'}</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  const total = state.expenses.reduce((s,e)=>s+Number(e.amount||0),0);
+  document.getElementById('expenseTotal').textContent = fmt(total);
+}
+function addExpense(){
+  const date = document.getElementById('expDate').value || todayISO();
+  const category = document.getElementById('expCategory').value.trim();
+  const desc = document.getElementById('expDesc').value.trim();
+  const amount = Number(document.getElementById('expAmount').value);
+  if(!amount){ showToast('Escribe un valor válido.'); return; }
+  state.expenses.push({ id: uid(), date, category, desc, amount });
+  document.getElementById('expDate').value='';
+  document.getElementById('expCategory').value='';
+  document.getElementById('expDesc').value='';
+  document.getElementById('expAmount').value='';
+  saveState(); renderAll();
+}
+function deleteExpense(id){
+  if(!isPending('expense-del', id)){ pendingAction = {type:'expense-del', id}; renderAll(); return; }
+  pendingAction = null;
+  state.expenses = state.expenses.filter(e=>e.id!==id);
+  saveState(); renderAll();
+}
 
-  // ---------- INIT ----------
-  renderChecklist();
-  renderMetas();
-  renderSummary();
-  renderAhorroAcumulado();
-})();
+/* ---------- Render all ---------- */
+function renderAll(){
+  renderResumen();
+  renderGoals();
+  renderFixed();
+  renderVariable();
+  renderQuincenas();
+  renderExpenses();
+}
+
+loadState();
+toggleFixedFreqFields();
+renderAll();
 </script>
+
 </body>
 </html>
