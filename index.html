@@ -7,9 +7,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;700&display=swap">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
---bg:#eef4f2;--card:#fff;--ink:#12313a;--mut:#58727a;--line:#d5e2de;--ok:#1b7a57;--bad:#b3392f;--warn:#a86b00;--f:#2f6f8f;--d:#b3392f;--u:#6a4c93;}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c20;--card:#16282d;--ink:#e6f0ee;--mut:#9bb3b8;--line:#2a4349;--ok:#4fc79a;--bad:#ff8a7d;--warn:#e8b04a;--f:#6fb6d8;--d:#ff8a7d;--u:#b79be0;}}
-:root[data-theme="dark"]{--bg:#0f1c20;--card:#16282d;--ink:#e6f0ee;--mut:#9bb3b8;--line:#2a4349;--ok:#4fc79a;--bad:#ff8a7d;--warn:#e8b04a;--f:#6fb6d8;--d:#ff8a7d;--u:#b79be0;}
+--bg:#eef4f2;--card:#fff;--ink:#12313a;--mut:#58727a;--line:#d5e2de;--ok:#1b7a57;--bad:#b3392f;--warn:#a86b00;--f:#2f6f8f;--d:#b3392f;--u:#6a4c93;--x:#b8620b;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c20;--card:#16282d;--ink:#e6f0ee;--mut:#9bb3b8;--line:#2a4349;--ok:#4fc79a;--bad:#ff8a7d;--warn:#e8b04a;--f:#6fb6d8;--d:#ff8a7d;--u:#b79be0;--x:#f0a35e;}}
+:root[data-theme="dark"]{--bg:#0f1c20;--card:#16282d;--ink:#e6f0ee;--mut:#9bb3b8;--line:#2a4349;--ok:#4fc79a;--bad:#ff8a7d;--warn:#e8b04a;--f:#6fb6d8;--d:#ff8a7d;--u:#b79be0;--x:#f0a35e;}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,sans-serif}
@@ -20,10 +20,11 @@ h2{font-size:24px;margin:36px 0 12px}
 p{margin:6px 0}.mut{color:var(--mut)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
 .inc{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
-.inc input{font:inherit;font-size:18px;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);width:210px}
-.inc input:focus{outline:3px solid var(--f);border-color:var(--f)}
-.months{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:16px}
-.big{font-family:"Bricolage Grotesque",sans-serif;font-size:30px;font-weight:800}
+input,select{font:inherit;font-size:17px;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+.inc input{font-size:18px;width:210px}
+input:focus,select:focus{outline:3px solid var(--f);border-color:var(--f)}
+.months{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
+.big{font-family:"Bricolage Grotesque",sans-serif;font-size:28px;font-weight:800}
 .bal{font-weight:700}.ok{color:var(--ok)}.bad{color:var(--bad)}
 .row{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
 .row:first-child{border-top:0}
@@ -32,12 +33,17 @@ p{margin:6px 0}.mut{color:var(--mut)}
 .bar i{display:block;height:100%;background:var(--ink)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font-size:13px;padding:3px 9px;border-radius:99px;border:1.5px solid;white-space:nowrap}
-.chip.f{color:var(--f)}.chip.d{color:var(--d)}.chip.u{color:var(--u)}
+.chip.f{color:var(--f)}.chip.d{color:var(--d)}.chip.u{color:var(--u)}.chip.x{color:var(--x)}
 button.chip{font:inherit;font-size:13px;background:transparent;cursor:pointer;padding:6px 11px;min-height:34px;text-align:left}
 .chip.done{text-decoration:line-through;opacity:.5}
 .meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:14px}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;margin-bottom:6px}
 .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;background:currentColor}
+.add{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;align-items:end}
+.add label{display:block;font-size:14px;font-weight:700;margin-bottom:4px}
+.add input,.add select{width:100%}
+.btn{font:inherit;font-weight:700;font-size:16px;padding:11px 16px;border-radius:10px;border:0;background:var(--ink);color:var(--bg);cursor:pointer;min-height:44px}
+.extras{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 ol.steps{padding:0;margin:0;list-style:none;counter-reset:s}
 ol.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
 ol.steps li:first-child{border-top:0}
@@ -52,28 +58,47 @@ th,td{text-align:left;padding:9px 6px;border-top:1px solid var(--line)}
 <body>
 <main>
 <h1>Plan para salir de deudas</h1>
-<p class="mut">Octubre a diciembre de 2026. Cada pago con su fecha, lo que debes juntar por quincena y qué hacer en orden.</p>
+<p class="mut">Octubre de 2026 a junio de 2027. Cada pago con su fecha, lo que debes juntar por quincena y qué hacer en orden.</p>
 
 <div class="card inc">
   <label for="inc"><b>¿Cuánto les entra por quincena a los dos?</b><br><span class="mut">Escríbelo y el plan te dice si alcanza.</span></label>
-  <input id="inc" inputmode="numeric" value="2250000" aria-label="Ingreso mensual en pesos">
+  <input id="inc" inputmode="numeric" value="2250000" aria-label="Ingreso por quincena en pesos">
 </div>
 <p class="mut">Lady $950.000 + Jefferson $1.300.000 = $2.250.000 por quincena, $4.500.000 al mes. Puedes cambiar el número.</p>
 <div class="months" id="months"></div>
 <div class="card" id="gap" style="margin-top:12px"></div>
 
+<h2>Añadir gasto</h2>
+<div class="card">
+  <div class="add">
+    <div><label for="xn">¿Qué gasto es?</label><input id="xn" placeholder="Ej: Gimnasio" maxlength="40"></div>
+    <div><label for="xa">Valor en pesos</label><input id="xa" inputmode="numeric" placeholder="Ej: 50000"></div>
+    <div><label for="xw">¿Cuándo se paga?</label>
+      <select id="xw">
+        <option value="all">Cada quincena (15 y 30)</option>
+        <option value="15">Solo los días 15</option>
+        <option value="30">Solo los días 30</option>
+        <option value="one">Una sola fecha</option>
+      </select></div>
+    <div id="xdw" style="display:none"><label for="xd">Fecha</label><select id="xd"></select></div>
+    <div><button class="btn" id="xadd" type="button">Añadir gasto</button></div>
+  </div>
+  <div class="extras" id="extras"></div>
+  <p class="mut" id="xhint">Los gastos que añadas se suman al total de cada fecha y a los resultados de cada mes. Quedan guardados en este navegador.</p>
+</div>
+
 <h2>Calendario de pagos</h2>
 <p class="mut">Toca cada pago para tacharlo cuando lo pagues. Queda guardado en este navegador.</p>
-<div class="legend"><span style="color:var(--f)">Fijos</span><span style="color:var(--d)">Deudas</span><span style="color:var(--u)">Universidad</span></div>
+<div class="legend"><span style="color:var(--f)">Fijos</span><span style="color:var(--d)">Deudas</span><span style="color:var(--u)">Universidad</span><span style="color:var(--x)">Gastos añadidos</span></div>
 <div class="card" id="cal"></div>
-<p class="mut">Mercado ($300.000) y cuidado de Thiago ($200.000) son por cada quincena (15 y 30). Las universidades se pagan el 30 de cada mes. La cuota del iPhone va de la 7 a la 12 y la del préstamo A de la 2 a la 5.</p>
+<p class="mut">Mercado ($300.000) y cuidado de Thiago ($200.000) son por cada quincena (15 y 30). Las universidades se pagan el 30 de cada mes (en febrero, el 28). La cuota del iPhone va de la 7 a la 12 y la del préstamo de Jhon Jairo de la 2 a la 5.</p>
 
 <h2>Cuándo se libera plata</h2>
 <div class="card scroll"><table>
 <tr><th>Fecha</th><th>Termina</th><th>Queda libre</th></tr>
 <tr><td>30 oct</td><td>Dr Peso y Monet se pagan y se cierran</td><td>No se repiten en noviembre</td></tr>
-<tr><td>30 nov</td><td>Préstamo quincenal A (5/5)</td><td>$290.000 por quincena</td></tr>
-<tr><td>15 dic</td><td>Préstamo quincenal B (5/5)</td><td>$290.000 por quincena</td></tr>
+<tr><td>30 nov</td><td>Préstamo quincenal Jhon Jairo (5/5)</td><td>$290.000 por quincena</td></tr>
+<tr><td>15 dic</td><td>Préstamo quincenal Don Víctor (5/5)</td><td>$290.000 por quincena</td></tr>
 <tr><td>30 dic</td><td>iPhone (12/12)</td><td>$230.000 por quincena</td></tr>
 <tr><td>Desde enero</td><td>Solo quedan fijos y universidades</td><td>$3.200.000 al mes en total (te sobran $1.300.000)</td></tr>
 </table></div>
@@ -103,60 +128,132 @@ th,td{text-align:left;padding:9px 6px;border-top:1px solid var(--line)}
 
 <script>
 var F=[["Arriendo",800,[30]],["Mercado",300,[15,30]],["Agua",70,[30]],["Energía",70,[15]],["Internet",80,[15]],["Datos Jefferson",55,[15]],["Datos Lady",25,[15]],["Cuidado de Thiago",200,[15,30]],["Gasolina Lady y Jefferson",100,[15,30]]];
+
+/* Fechas quincenales: 15 y 30 de oct 2026 a jun 2027 */
+var D=[];
+[["10",2026],["11",2026],["12",2026],["01",2027],["02",2027],["03",2027],["04",2027],["05",2027],["06",2027]].forEach(function(m){D.push(m[0]+"-15");D.push(m[0]+"-30")});
+var MO=["10","11","12","01","02","03","04","05","06"];
+var MN={"10":"Octubre","11":"Noviembre","12":"Diciembre","01":"Enero","02":"Febrero","03":"Marzo","04":"Abril","05":"Mayo","06":"Junio"};
+var D30=D.filter(function(d){return d.slice(3)==="30"});
+
 var V=[
 {n:"Préstamo cuota única",a:175,t:"d",dates:["10-15"]},
 {n:"Dr Peso",a:780,t:"d",dates:["10-30"]},
 {n:"Monet",a:160,t:"d",dates:["10-30"]},
 {n:"Préstamo cuota única 2",a:180,t:"d",dates:["10-15"]},
-{n:"Préstamo A",a:290,t:"d",dates:["10-15","10-30","11-15","11-30"],k:2,of:5},
-{n:"Préstamo B",a:290,t:"d",dates:["10-15","10-30","11-15","11-30","12-15"],k:1,of:5},
+{n:"Préstamo Jhon Jairo",a:290,t:"d",dates:["10-15","10-30","11-15","11-30"],k:2,of:5},
+{n:"Préstamo Don Víctor",a:290,t:"d",dates:["10-15","10-30","11-15","11-30","12-15"],k:1,of:5},
 {n:"iPhone",a:230,t:"d",dates:["10-15","10-30","11-15","11-30","12-15","12-30"],k:7,of:12},
-{n:"Universidad Jefferson",a:450,t:"u",dates:["10-30","11-30","12-30","01-30"]},
-{n:"Universidad Lady",a:450,t:"u",dates:["11-30","12-30","01-30"]}];
-var D=["10-15","10-30","11-15","11-30","12-15","12-30","01-15","01-30"];var RD=["10-30","11-30","12-30"];
-var MN={"10":"Octubre","11":"Noviembre","12":"Diciembre","01":"Enero"};
+{n:"Universidad Jefferson",a:450,t:"u",dates:D30},
+{n:"Universidad Lady",a:450,t:"u",dates:D30.filter(function(d){return d!=="10-30"})}];
+
 function money(k){return "$"+Math.round(k*1000).toLocaleString("es-CO")}
-var rows=D.map(function(d){
-  var day=parseInt(d.slice(3),10),items=[];
-  F.forEach(function(f){if(f[2].indexOf(day)>-1)items.push({l:f[0],a:f[1],t:"f"})});
-  V.forEach(function(v){var i=v.dates.indexOf(d);if(i>-1)items.push({l:v.n+(v.of?" "+(v.k+i)+"/"+v.of:""),a:v.a,t:v.t})});
-  return {d:d,items:items,tot:items.reduce(function(s,x){return s+x.a},0)};
-});
-var max=Math.max.apply(null,rows.map(function(r){return r.tot}));
-var mt={};rows.forEach(function(r){var m=r.d.slice(0,2);mt[m]=(mt[m]||0)+r.tot});
-var fijo=F.reduce(function(s,f){return s+f[1]*f[2].length},0);
+function dateOf(d){
+  var mm=parseInt(d.slice(0,2),10),yy=mm<=6?2027:2026,day=parseInt(d.slice(3),10);
+  var last=new Date(yy,mm,0).getDate();
+  return new Date(yy,mm-1,Math.min(day,last));
+}
+function dlabel(d){return dateOf(d).toLocaleDateString("es-CO",{weekday:"short",day:"numeric",month:"short",year:"numeric"})}
+
+/* Gastos añadidos */
+var extras=[];
+try{extras=JSON.parse(localStorage.getItem("ext2")||"[]")||[]}catch(e){extras=[]}
+function saveExtras(){try{localStorage.setItem("ext2",JSON.stringify(extras))}catch(e){}}
+function applies(x,d){
+  var day=d.slice(3);
+  if(x.w==="all")return true;
+  if(x.w==="15")return day==="15";
+  if(x.w==="30")return day==="30";
+  return x.d===d;
+}
+function whenTxt(x){
+  if(x.w==="all")return "cada quincena";
+  if(x.w==="15")return "los 15";
+  if(x.w==="30")return "los 30";
+  return dlabel(x.d);
+}
+function perMonth(x){return x.w==="all"?2:(x.w==="one"?0:1)}
+
 var inc=document.getElementById("inc");
 try{var sv=localStorage.getItem("inc2");if(sv)inc.value=sv}catch(e){}
 var chk={};try{chk=JSON.parse(localStorage.getItem("chk2")||"{}")||{}}catch(e){chk={}}
-var MO=["10","11","12","01"];
+
+function buildRows(){
+  return D.map(function(d){
+    var day=parseInt(d.slice(3),10),items=[];
+    F.forEach(function(f){if(f[2].indexOf(day)>-1)items.push({l:f[0],a:f[1],t:"f",id:"b"+items.length})});
+    V.forEach(function(v){var i=v.dates.indexOf(d);if(i>-1)items.push({l:v.n+(v.of?" "+(v.k+i)+"/"+v.of:""),a:v.a,t:v.t,id:"b"+items.length})});
+    extras.forEach(function(x){if(applies(x,d))items.push({l:x.n,a:x.a,t:"x",id:"x"+x.id})});
+    return {d:d,items:items,tot:items.reduce(function(s,y){return s+y.a},0)};
+  });
+}
+
 function render(){
+  var rows=buildRows();
+  var max=Math.max.apply(null,rows.map(function(r){return r.tot}))||1;
+  var mt={};rows.forEach(function(r){var m=r.d.slice(0,2);mt[m]=(mt[m]||0)+r.tot});
+  var fijo=F.reduce(function(s,f){return s+f[1]*f[2].length},0);
+  var fijoX=extras.reduce(function(s,x){return s+x.a*perMonth(x)},0);
   var income=parseInt(inc.value.replace(/\D/g,""),10)||0;
   try{localStorage.setItem("inc2",inc.value)}catch(e){}
   var mnet={};
+
   document.getElementById("cal").innerHTML=rows.map(function(r){
-    var mm=parseInt(r.d.slice(0,2),10);
-    var dt=new Date(mm<6?2027:2026,mm-1,parseInt(r.d.slice(3),10));
-    var lab=dt.toLocaleDateString("es-CO",{weekday:"short",day:"numeric",month:"short"});
     var left=0;
-    var chips=r.items.map(function(x,i){var k=r.d+"|"+i,on=!!chk[k];if(!on)left+=x.a;
+    var chips=r.items.map(function(x){var k=r.d+"|"+x.id,on=!!chk[k];if(!on)left+=x.a;
       return '<button type="button" class="chip '+x.t+(on?" done":"")+'" data-k="'+k+'" aria-pressed="'+on+'">'+x.l+" · "+money(x.a)+"</button>"}).join("");
     var q="";
     if(income){var net=income/1000-r.tot;mnet[r.d.slice(0,2)]=(mnet[r.d.slice(0,2)]||0)+net;
       q='<div class="bal '+(net>=0?"ok":"bad")+'">Entra '+money(income/1000)+" · Queda "+(net>=0?"+":"−")+money(Math.abs(net))+"</div>"}
     var por=left?"Por pagar "+money(left):"✓ Todo pagado";
-    return '<div class="row"><div class="date">'+lab+'<br><span class="mut" style="font-weight:500;text-transform:none">'+money(r.tot)+'</span></div><div><div class="bar"><i style="width:'+(r.tot/max*100)+'%"></i></div><div class="chips">'+chips+'</div><div class="meta">'+q+'<div class="mut">'+por+"</div></div></div></div>";
+    var dt=dateOf(r.d);
+    var lab=dt.toLocaleDateString("es-CO",{weekday:"short",day:"numeric",month:"short"});
+    var yr=dt.getFullYear();
+    return '<div class="row"><div class="date">'+lab+' '+yr+'<br><span class="mut" style="font-weight:500;text-transform:none">'+money(r.tot)+'</span></div><div><div class="bar"><i style="width:'+(r.tot/max*100)+'%"></i></div><div class="chips">'+chips+'</div><div class="meta">'+q+'<div class="mut">'+por+"</div></div></div></div>";
   }).join("");
+
   document.getElementById("months").innerHTML=MO.map(function(m){
     var diff=(mnet[m]||0)*1000,b="";
     if(income)b=diff>=0?'<p class="bal ok">Te sobran '+money(diff/1000)+"</p>":'<p class="bal bad">Te faltan '+money(-diff/1000)+"</p>";
-    return '<div class="card"><div class="mut">'+MN[m]+'</div><div class="big">'+money(mt[m])+"</div>"+b+"</div>";
+    return '<div class="card"><div class="mut">'+MN[m]+(m<"07"&&m!=="10"&&m!=="11"&&m!=="12"?" 2027":" 2026")+'</div><div class="big">'+money(mt[m])+"</div>"+b+"</div>";
   }).join("");
+
+  document.getElementById("extras").innerHTML=extras.map(function(x){
+    return '<button type="button" class="chip x" data-del="'+x.id+'" aria-label="Quitar '+x.n+'">✕ '+x.n+" · "+money(x.a)+" · "+whenTxt(x)+"</button>";
+  }).join("");
+
   var g=document.getElementById("gap");
   if(!income){g.style.display="none";return}
   g.style.display="block";
-  var rest=income*2-fijo*1000;
-  g.innerHTML="Los pagos fijos (sin deudas ni universidad) suman <b>"+money(fijo)+"</b> al mes. "+(rest>=0?'Te quedan <b class="ok">'+money(rest/1000)+"</b> al mes para deudas y universidad.":'<span class="bad"><b>Eso ya es más de lo que entra.</b></span>');
+  var base=fijo+fijoX;
+  var rest=income*2-base*1000;
+  g.innerHTML="Los pagos fijos"+(fijoX?" y los gastos que añadiste":"")+" (sin deudas ni universidad) suman <b>"+money(base)+"</b> al mes. "+(rest>=0?'Te quedan <b class="ok">'+money(rest/1000)+"</b> al mes para deudas y universidad.":'<span class="bad"><b>Eso ya es más de lo que entra.</b></span>');
 }
+
+/* Formulario de gastos */
+var xd=document.getElementById("xd");
+xd.innerHTML=D.map(function(d){return '<option value="'+d+'">'+dlabel(d)+"</option>"}).join("");
+var xw=document.getElementById("xw");
+xw.addEventListener("change",function(){document.getElementById("xdw").style.display=xw.value==="one"?"block":"none"});
+document.getElementById("xadd").addEventListener("click",function(){
+  var n=document.getElementById("xn").value.trim()||"Gasto";
+  var pesos=parseInt(document.getElementById("xa").value.replace(/\D/g,""),10)||0;
+  var hint=document.getElementById("xhint");
+  if(!pesos){hint.textContent="Escribe el valor del gasto en pesos.";hint.className="bad";return}
+  hint.className="mut";
+  hint.textContent="Los gastos que añadas se suman al total de cada fecha y a los resultados de cada mes. Quedan guardados en este navegador.";
+  extras.push({id:Date.now().toString(36)+Math.floor(Math.random()*1000),n:n,a:pesos/1000,w:xw.value,d:xd.value});
+  saveExtras();
+  document.getElementById("xn").value="";document.getElementById("xa").value="";
+  render();
+});
+document.getElementById("extras").addEventListener("click",function(e){
+  var b=e.target.closest("[data-del]");if(!b)return;
+  var id=b.getAttribute("data-del");
+  extras=extras.filter(function(x){return x.id!==id});
+  saveExtras();render();
+});
+
 document.getElementById("cal").addEventListener("click",function(e){
   var b=e.target.closest(".chip");if(!b)return;
   var k=b.getAttribute("data-k");
