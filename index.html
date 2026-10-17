@@ -7,9 +7,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;700&display=swap">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
---bg:#eef4f2;--card:#fff;--ink:#12313a;--mut:#58727a;--line:#d5e2de;--ok:#1b7a57;--bad:#b3392f;--warn:#a86b00;--f:#2f6f8f;--d:#b3392f;--u:#6a4c93;--x:#b8620b;}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c20;--card:#16282d;--ink:#e6f0ee;--mut:#9bb3b8;--line:#2a4349;--ok:#4fc79a;--bad:#ff8a7d;--warn:#e8b04a;--f:#6fb6d8;--d:#ff8a7d;--u:#b79be0;--x:#f0a35e;}}
-:root[data-theme="dark"]{--bg:#0f1c20;--card:#16282d;--ink:#e6f0ee;--mut:#9bb3b8;--line:#2a4349;--ok:#4fc79a;--bad:#ff8a7d;--warn:#e8b04a;--f:#6fb6d8;--d:#ff8a7d;--u:#b79be0;--x:#f0a35e;}
+--bg:#eef4f2;--card:#fff;--ink:#12313a;--mut:#58727a;--line:#d5e2de;--ok:#1b7a57;--bad:#b3392f;--warn:#a86b00;--f:#2f6f8f;--d:#b3392f;--u:#6a4c93;--x:#b8620b;--i:#1b7a57;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1c20;--card:#16282d;--ink:#e6f0ee;--mut:#9bb3b8;--line:#2a4349;--ok:#4fc79a;--bad:#ff8a7d;--warn:#e8b04a;--f:#6fb6d8;--d:#ff8a7d;--u:#b79be0;--x:#f0a35e;--i:#4fc79a;}}
+:root[data-theme="dark"]{--bg:#0f1c20;--card:#16282d;--ink:#e6f0ee;--mut:#9bb3b8;--line:#2a4349;--ok:#4fc79a;--bad:#ff8a7d;--warn:#e8b04a;--f:#6fb6d8;--d:#ff8a7d;--u:#b79be0;--x:#f0a35e;--i:#4fc79a;}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,sans-serif}
@@ -32,15 +32,18 @@ input:focus,select:focus{outline:3px solid var(--f);border-color:var(--f)}
 .bar{height:8px;border-radius:4px;background:var(--line);margin:6px 0 10px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--ink)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips.inch{margin-top:8px}
 .cw{display:inline-flex;align-items:stretch;border:1.5px solid;border-radius:99px;overflow:hidden;max-width:100%}
-.cw.f{color:var(--f)}.cw.d{color:var(--d)}.cw.u{color:var(--u)}.cw.x{color:var(--x)}
+.cw.f{color:var(--f)}.cw.d{color:var(--d)}.cw.u{color:var(--u)}.cw.x{color:var(--x)}.cw.i{color:var(--i)}
 .cw button{font:inherit;font-size:13px;background:transparent;color:inherit;border:0;cursor:pointer;min-height:34px;padding:4px 9px}
 .cw .tg{text-align:left;padding-left:12px}
+.cw span.tg{display:flex;align-items:center;font-size:13px;font-weight:700;padding:4px 9px 4px 12px}
 .cw .ib{border-left:1px solid;opacity:.8;min-width:34px}
 .cw .tg.done{text-decoration:line-through;opacity:.5}
 .meta{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:14px}
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .lnk{font:inherit;font-size:13px;font-weight:700;background:transparent;color:var(--ink);border:1.5px dashed var(--mut);border-radius:99px;padding:6px 12px;min-height:34px;cursor:pointer}
+.lnk.inbtn{color:var(--i);border-color:var(--i)}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;margin-bottom:6px}
 .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;background:currentColor}
 .ef{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-top:10px;padding:12px;border:1.5px dashed var(--line);border-radius:12px;width:100%}
@@ -71,13 +74,13 @@ th,td{text-align:left;padding:9px 6px;border-top:1px solid var(--line)}
   <label for="inc"><b>¿Cuánto les entra por quincena a los dos?</b><br><span class="mut">Escríbelo y el plan te dice si alcanza.</span></label>
   <input id="inc" inputmode="numeric" value="2250000" aria-label="Ingreso por quincena en pesos">
 </div>
-<p class="mut">Lady $950.000 + Jefferson $1.300.000 = $2.250.000 por quincena, $4.500.000 al mes. Puedes cambiar el número.</p>
+<p class="mut">Lady $950.000 + Jefferson $1.300.000 = $2.250.000 por quincena, $4.500.000 al mes. Puedes cambiar el número y sumar ingresos adicionales en cada quincena.</p>
 <div class="months" id="months"></div>
 <div class="card" id="gap" style="margin-top:12px"></div>
 
 <h2>Calendario de pagos</h2>
-<p class="mut">Toca el nombre de un pago para tacharlo cuando lo pagues. Con ✎ lo editas y con ✕ lo borras. Con «Añadir gasto» agregas uno nuevo en esa quincena. Los cambios aplican solo a esa fecha y quedan guardados en este navegador.</p>
-<div class="legend"><span style="color:var(--f)">Fijos</span><span style="color:var(--d)">Deudas</span><span style="color:var(--u)">Universidad</span><span style="color:var(--x)">Gastos añadidos</span></div>
+<p class="mut">Toca el nombre de un pago para tacharlo cuando lo pagues. Con ✎ lo editas y con ✕ lo borras. Con «Añadir gasto» agregas uno nuevo y con «Añadir ingreso» sumas plata extra que te entre en esa quincena. Los cambios aplican solo a esa fecha y quedan guardados en este navegador.</p>
+<div class="legend"><span style="color:var(--f)">Fijos</span><span style="color:var(--d)">Deudas</span><span style="color:var(--u)">Universidad</span><span style="color:var(--x)">Gastos añadidos</span><span style="color:var(--i)">Ingresos adicionales</span></div>
 <div class="card" id="cal"></div>
 <p class="mut">Mercado ($300.000) y cuidado de Thiago ($200.000) son por cada quincena (15 y 30). Aquaservicios ($70.000) y Celsia ($100.000) se pagan el 15 de cada mes. Las universidades se pagan el 30 de cada mes (en febrero, el 28). La cuota del iPhone va de la 7 a la 12 y la del préstamo de Jhon Jairo de la 2 a la 5.</p>
 
@@ -97,7 +100,7 @@ th,td{text-align:left;padding:9px 6px;border-top:1px solid var(--line)}
 <li><div><b>No renueves: cierra Dr Peso y Monet el 30 de octubre</b>Ningún préstamo nuevo, ni renovar estos dos. Pagas $780.000 y $160.000 el 30 de octubre y ahí terminan. Renovar solo te deja pagando lo mismo el mes siguiente.</div></li>
 <li><div><b>Paga primero lo que sostiene a tu familia</b>Arriendo, mercado, cuidado de Thiago, Aquaservicios y Celsia. Después las deudas, empezando por las que cobran más por atraso.</div></li>
 <li><div><b>Habla con el prestamista antes de fallar una cuota</b>Un mensaje a tiempo para pedir un plazo o repartir la cuota casi siempre sale mejor que quedar en mora.</div></li>
-<li><div><b>Cubre el faltante con ingreso extra</b>Octubre y noviembre son los meses cortos. De tus negocios (fajas, kits de uñas, fotos con IA, Hotmart) escoge el que más rápido te da plata y ponle una meta semanal; las fechas en rojo del calendario muestran cuánto falta en cada una.</div></li>
+<li><div><b>Cubre el faltante con ingreso extra</b>Octubre y noviembre son los meses cortos. De tus negocios (fajas, kits de uñas, fotos con IA, Hotmart) escoge el que más rápido te da plata y ponle una meta semanal. Cuando te entre esa plata, regístrala con «Añadir ingreso» en la quincena y mira cuánto falta.</div></li>
 <li><div><b>Revisa lo grande, no lo pequeño</b>Mercado y las dos universidades pesan más que cualquier dato o servicio. Pregunta en la universidad por financiación, pagar una a la vez o becas: son $900.000 al mes durante años.</div></li>
 <li><div><b>Cada deuda que termina, su plata se queda en tu cuenta</b>No la gastes: pásala a ahorro. Así se arma un colchón sin sentir que ahorras.</div></li>
 <li><div><b>Primero un colchón pequeño, después las metas</b>Una cuota de arriendo guardada te protege de volver a endeudarte. Con eso listo, retoma las metas en este orden.</div></li>
@@ -146,9 +149,10 @@ function load(k,def){try{return JSON.parse(localStorage.getItem(k)||"")||def}cat
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
 var extras=load("ext2",[]);
+var incomes=load("ing2",[]);   /* ingresos adicionales */
 var ov=load("ov2",{});      /* cambios por fecha: {"fecha|id": {l,a} o {del:1}} */
 var chk=load("chk2",{});
-var editing=null,adding=null;
+var editing=null,adding=null,addingInc=null;
 
 function applies(x,d){
   var day=d.slice(3);
@@ -161,6 +165,13 @@ function applies(x,d){
 var inc=document.getElementById("inc");
 try{var sv=localStorage.getItem("inc2");if(sv)inc.value=sv}catch(e){}
 
+function applyOv(d,it){
+  var o=ov[d+"|"+it.id];
+  if(o&&o.del)return null;
+  if(o){if(o.l)it.l=o.l;if(o.a!=null)it.a=o.a}
+  return it;
+}
+
 function buildRows(){
   return D.map(function(d){
     var day=parseInt(d.slice(3),10),items=[],n=0;
@@ -168,15 +179,24 @@ function buildRows(){
     V.forEach(function(v){var i=v.dates.indexOf(d);if(i>-1)items.push({l:v.n+(v.of?" "+(v.k+i)+"/"+v.of:""),a:v.a,t:v.t,id:"b"+(n++)})});
     extras.forEach(function(x){if(applies(x,d))items.push({l:x.n,a:x.a,t:"x",id:"x"+x.id})});
     var out=[];
-    items.forEach(function(it){
-      var o=ov[d+"|"+it.id];
-      if(o&&o.del)return;
-      if(o){if(o.l)it.l=o.l;if(o.a!=null)it.a=o.a}
-      out.push(it);
+    items.forEach(function(it){var r=applyOv(d,it);if(r)out.push(r)});
+    var ins=[];
+    incomes.forEach(function(x){
+      if(!applies(x,d))return;
+      var r=applyOv(d,{l:x.n,a:x.a,t:"i",id:"i"+x.id});
+      if(r)ins.push(r);
     });
     var changed=Object.keys(ov).some(function(k){return k.indexOf(d+"|")===0});
-    return {d:d,items:out,changed:changed,tot:out.reduce(function(s,y){return s+y.a},0)};
+    return {d:d,items:out,ins:ins,changed:changed,
+      tot:out.reduce(function(s,y){return s+y.a},0),
+      incTot:ins.reduce(function(s,y){return s+y.a},0)};
   });
+}
+
+function editForm(k,x){
+  return '<div class="ef"><div><label for="en">Nombre</label><input id="en" maxlength="40" value="'+esc(x.l)+'"></div>'+
+    '<div><label for="ea">Valor en pesos</label><input id="ea" inputmode="numeric" value="'+Math.round(x.a*1000)+'"></div>'+
+    '<div class="bw"><button type="button" class="btn" data-save="'+k+'">Guardar</button><button type="button" class="btn sec" data-cancel="1">Cancelar</button></div></div>';
 }
 
 function render(){
@@ -193,37 +213,51 @@ function render(){
     var left=0,d=r.d;
     var chips=r.items.map(function(x){
       var k=d+"|"+x.id,on=!!chk[k];if(!on)left+=x.a;
-      if(editing===k){
-        return '<div class="ef"><div><label for="en">Nombre</label><input id="en" maxlength="40" value="'+esc(x.l)+'"></div>'+
-          '<div><label for="ea">Valor en pesos</label><input id="ea" inputmode="numeric" value="'+Math.round(x.a*1000)+'"></div>'+
-          '<div class="bw"><button type="button" class="btn" data-save="'+k+'">Guardar</button><button type="button" class="btn sec" data-cancel="1">Cancelar</button></div></div>';
-      }
+      if(editing===k)return editForm(k,x);
       return '<span class="cw '+x.t+'"><button type="button" class="tg'+(on?" done":"")+'" data-k="'+k+'" aria-pressed="'+on+'">'+esc(x.l)+" · "+money(x.a)+'</button>'+
         '<button type="button" class="ib" data-edit="'+k+'" aria-label="Editar '+esc(x.l)+'">✎</button>'+
         '<button type="button" class="ib" data-del="'+k+'" aria-label="Borrar '+esc(x.l)+'">✕</button></span>';
     }).join("");
+    var inChips=r.ins.map(function(x){
+      var k=d+"|"+x.id;
+      if(editing===k)return editForm(k,x);
+      return '<span class="cw i"><span class="tg">+ '+esc(x.l)+" · "+money(x.a)+'</span>'+
+        '<button type="button" class="ib" data-edit="'+k+'" aria-label="Editar '+esc(x.l)+'">✎</button>'+
+        '<button type="button" class="ib" data-del="'+k+'" aria-label="Borrar '+esc(x.l)+'">✕</button></span>';
+    }).join("");
+    var day=d.slice(3);
     var form="";
     if(adding===d){
-      var day=d.slice(3);
       form='<div class="ef"><div><label for="an">¿Qué gasto es?</label><input id="an" maxlength="40" placeholder="Ej: Gimnasio"></div>'+
         '<div><label for="aa">Valor en pesos</label><input id="aa" inputmode="numeric" placeholder="Ej: 50000"></div>'+
         '<div><label for="aw">¿Se repite?</label><select id="aw"><option value="one">Solo esta fecha</option><option value="all">Cada quincena (15 y 30)</option><option value="'+day+'">Todos los días '+day+'</option></select></div>'+
         '<div class="bw"><button type="button" class="btn" data-addsave="'+d+'">Añadir</button><button type="button" class="btn sec" data-cancel="1">Cancelar</button></div></div>';
     }
+    if(addingInc===d){
+      form+='<div class="ef"><div><label for="iname">¿De dónde es el ingreso?</label><input id="iname" maxlength="40" placeholder="Ej: Venta de fajas"></div>'+
+        '<div><label for="iamt">Valor en pesos</label><input id="iamt" inputmode="numeric" placeholder="Ej: 200000"></div>'+
+        '<div><label for="iwhen">¿Se repite?</label><select id="iwhen"><option value="one">Solo esta fecha</option><option value="all">Cada quincena (15 y 30)</option><option value="'+day+'">Todos los días '+day+'</option></select></div>'+
+        '<div class="bw"><button type="button" class="btn" data-incsave="'+d+'">Añadir ingreso</button><button type="button" class="btn sec" data-cancel="1">Cancelar</button></div></div>';
+    }
     var acts='<div class="acts">'+(adding===d?"":'<button type="button" class="lnk" data-add="'+d+'">+ Añadir gasto</button>')+
+      (addingInc===d?"":'<button type="button" class="lnk inbtn" data-addinc="'+d+'">+ Añadir ingreso</button>')+
       (r.changed?'<button type="button" class="lnk" data-reset="'+d+'">↺ Restaurar esta fecha</button>':"")+'</div>';
+    var entra=income/1000+r.incTot;
+    var net=entra-r.tot;
+    mnet[d.slice(0,2)]=(mnet[d.slice(0,2)]||0)+net;
     var q="";
-    if(income){var net=income/1000-r.tot;mnet[d.slice(0,2)]=(mnet[d.slice(0,2)]||0)+net;
-      q='<div class="bal '+(net>=0?"ok":"bad")+'">Entra '+money(income/1000)+" · Queda "+(net>=0?"+":"−")+money(Math.abs(net))+"</div>"}
+    if(income||r.incTot){
+      q='<div class="bal '+(net>=0?"ok":"bad")+'">Entra '+money(entra)+(r.incTot?" (con "+money(r.incTot)+" extra)":"")+" · Queda "+(net>=0?"+":"−")+money(Math.abs(net))+"</div>"}
     var por=left?"Por pagar "+money(left):"✓ Todo pagado";
     var dt=dateOf(d);
     var lab=dt.toLocaleDateString("es-CO",{weekday:"short",day:"numeric",month:"short"});
-    return '<div class="row"><div class="date">'+lab+' '+dt.getFullYear()+'<br><span class="mut" style="font-weight:500;text-transform:none">'+money(r.tot)+'</span></div><div><div class="bar"><i style="width:'+(r.tot/max*100)+'%"></i></div><div class="chips">'+chips+'</div>'+form+acts+'<div class="meta">'+q+'<div class="mut">'+por+"</div></div></div></div>";
+    return '<div class="row"><div class="date">'+lab+' '+dt.getFullYear()+'<br><span class="mut" style="font-weight:500;text-transform:none">'+money(r.tot)+'</span></div><div><div class="bar"><i style="width:'+(r.tot/max*100)+'%"></i></div><div class="chips">'+chips+'</div>'+(inChips?'<div class="chips inch">'+inChips+'</div>':"")+form+acts+'<div class="meta">'+q+'<div class="mut">'+por+"</div></div></div></div>";
   }).join("");
 
+  var anyInc=income>0||incomes.length>0;
   document.getElementById("months").innerHTML=MO.map(function(m){
     var diff=(mnet[m]||0)*1000,b="";
-    if(income)b=diff>=0?'<p class="bal ok">Te sobran '+money(diff/1000)+"</p>":'<p class="bal bad">Te faltan '+money(-diff/1000)+"</p>";
+    if(anyInc)b=diff>=0?'<p class="bal ok">Te sobran '+money(diff/1000)+"</p>":'<p class="bal bad">Te faltan '+money(-diff/1000)+"</p>";
     return '<div class="card"><div class="mut">'+MN[m]+(["10","11","12"].indexOf(m)>-1?" 2026":" 2027")+'</div><div class="big">'+money(mt[m])+"</div>"+b+"</div>";
   }).join("");
 
@@ -242,24 +276,30 @@ document.getElementById("cal").addEventListener("click",function(e){
   if(k){
     if(chk[k])delete chk[k];else chk[k]=1;
     save("chk2",chk);focusSel='.tg[data-k="'+k+'"]';
-  }else if(b.hasAttribute("data-edit")){editing=b.getAttribute("data-edit");adding=null;focusSel="#en"}
+  }else if(b.hasAttribute("data-edit")){editing=b.getAttribute("data-edit");adding=null;addingInc=null;focusSel="#en"}
   else if(b.hasAttribute("data-del")){
     var dk=b.getAttribute("data-del");ov[dk]={del:1};save("ov2",ov);
   }else if(b.hasAttribute("data-save")){
     var sk=b.getAttribute("data-save"),p=pesos("ea"),nm=document.getElementById("en").value.trim();
     if(isNaN(p)){document.getElementById("ea").focus();return}
     ov[sk]={l:nm||undefined,a:p/1000};save("ov2",ov);editing=null;
-  }else if(b.hasAttribute("data-add")){adding=b.getAttribute("data-add");editing=null;focusSel="#an"}
+  }else if(b.hasAttribute("data-add")){adding=b.getAttribute("data-add");editing=null;addingInc=null;focusSel="#an"}
   else if(b.hasAttribute("data-addsave")){
     var ad=b.getAttribute("data-addsave"),ap=pesos("aa");
     if(!ap){document.getElementById("aa").focus();return}
     extras.push({id:Date.now().toString(36)+Math.floor(Math.random()*1000),n:document.getElementById("an").value.trim()||"Gasto",a:ap/1000,w:document.getElementById("aw").value,d:ad});
     save("ext2",extras);adding=null;
+  }else if(b.hasAttribute("data-addinc")){addingInc=b.getAttribute("data-addinc");adding=null;editing=null;focusSel="#iname"}
+  else if(b.hasAttribute("data-incsave")){
+    var id2=b.getAttribute("data-incsave"),ip=pesos("iamt");
+    if(!ip){document.getElementById("iamt").focus();return}
+    incomes.push({id:Date.now().toString(36)+Math.floor(Math.random()*1000),n:document.getElementById("iname").value.trim()||"Ingreso extra",a:ip/1000,w:document.getElementById("iwhen").value,d:id2});
+    save("ing2",incomes);addingInc=null;
   }else if(b.hasAttribute("data-reset")){
     var pre=b.getAttribute("data-reset")+"|";
     Object.keys(ov).forEach(function(x){if(x.indexOf(pre)===0)delete ov[x]});
     save("ov2",ov);
-  }else if(b.hasAttribute("data-cancel")){editing=null;adding=null}
+  }else if(b.hasAttribute("data-cancel")){editing=null;adding=null;addingInc=null}
   else return;
   render();
   if(focusSel){var n=document.querySelector(focusSel);if(n)n.focus({preventScroll:true})}
